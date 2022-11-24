@@ -1,33 +1,24 @@
-const clientes=[
-    {
-    nombre:'Santiago',
-    apellido:'Mosquera',
-    dni:'1301231234',
-    direccion:'Av. Amazonas y Naciones Unidad',   
-    imagen:'', 
-    pedidos:{
+import clientes from "./listaClientesTest"
 
-    },
-    pidiendo:{
-
-    },
-    nombre:'Santiago2',
-    apellido:'Mosquera2',
-    dni:'1301231233',
-    direccion:'Av. Amazonas y Naciones Unidad',   
-    imagen:'', 
-    pedidos:{
-
-    },
-    pidiendo:{
-
-    }
-}
-
-]
-
-const getClientes=async ()=>{
+const getClients=async ()=>{
     return clientes
 }
+const deleteClient=async()=>{
 
-export {getClientes}
+}
+
+const searchClients=async(criteria)=>{
+    if(!criteria || criteria===''){
+        return clientes
+    }
+    let results=[]
+    criteria=criteria.toLowerCase()
+    clientes.forEach(element => {
+        if(element.nombre.toLowerCase().includes(criteria) || element.apellido.includes(criteria) ||element.dni.includes(criteria)){
+            results.push(element)
+        }
+    });
+    return results
+}
+
+export {getClients,searchClients,deleteClient}

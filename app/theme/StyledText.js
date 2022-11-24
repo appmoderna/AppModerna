@@ -8,11 +8,30 @@ const styles=StyleSheet.create({
         fontFamily:theme.fonts.main,    
         fontWeight:theme.fontWeight.normal 
     },
+    small:{
+        fontSize:theme.fontSize.small,
+    },
     title:{
         fontSize:theme.fontSize.title,
     },
+    heading:{
+        fontSize:theme.fontSize.heading
+    },
+    subheading:{
+        fontSize:theme.fontSize.subheading
+    },
     bold:{
         fontWeight:theme.fontWeight.bold
+    },
+    normal:{
+        fontWeight:theme.fontWeight.normal
+    },
+    softbold:{
+        fontWeight:theme.fontWeight.softbold
+    },  
+    light:{
+        fontWeight:theme.fontWeight.light,
+        color:theme.colors.lightgray,
     },
     bolder:{
         fontWeight:theme.fontWeight.bolder
@@ -27,17 +46,24 @@ const styles=StyleSheet.create({
         color:theme.colors.modernaYellow,
     }
 })
-const StyledText = ({children,title,subtitle,bold,bolder,center,modernaPrimary,modernaSecondary,style, ...restOfProps}) => {
+const StyledText = ({children,color,light,softbold,small,title,subtitle,heading,subheading,bold,bolder,center,modernaPrimary,modernaSecondary,style, ...restOfProps}) => {
   
     const textStyle=[
         styles.text,
+        heading && styles.heading,
+        subheading && styles.subheading,
         title && styles.title,
+        small && styles.small,
         subtitle && styles.subtitle,
+        softbold && styles.softbold,
         bold && styles.bold,
+        light && styles.light,
         bolder && styles.bolder,
         center && styles.center,
         modernaPrimary && styles.modernaPrimary,
-        modernaSecondary && styles.modernaSecondary
+        modernaSecondary && styles.modernaSecondary,
+        color&& {color:color},
+        style
   ]
     return (
       <Text style={textStyle} {...restOfProps}>{children}</Text>
