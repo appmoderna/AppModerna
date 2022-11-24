@@ -1,6 +1,5 @@
 import React from 'react'
-import { Alert, StyleSheet , TextInput, TouchableHighlight, TouchableOpacity, View} from 'react-native'
-import Icons from './Icons'
+import { StyleSheet , TextInput, View} from 'react-native'
 import StyledText from '../theme/StyledText'
 import theme from '../theme/theme'
 
@@ -9,29 +8,25 @@ import theme from '../theme/theme'
 //si no se manda un placeHolder, se pondrá por defecto Buscar
 //si no se manda un label, no se mostrara nada en la parte superior derecha
 //onSubmit se ejecuta cuando se toca el botón o cuando se manda el texto del input
-export default function SearhInput({label,placeHolder,searchRef,onSubmit,style}) {
-
-    const submitSearch=()=>{
-      if(onSubmit){
-        onSubmit()
-      }
-    }
+export default function StyledInput({label,placeHolder,textRef,style,icon}) {
     return (
       <View style={style}>
         {label&&
           <View style={styles.label}><StyledText small color={theme.colors.inputcolor}>{label}</StyledText></View>
         }
-        <TextInput style={styles.search} placeholder={placeHolder?placeHolder:'Buscar'}
+        <TextInput style={styles.input} placeholder={placeHolder?placeHolder:'Escribe aquí'}
           onChangeText={(e)=>{
-            if(searchRef){
-              searchRef.current=e?e:''
+            if(textRef){
+              textRef.current=e?e:''
             }
           }}
-          onSubmitEditing={submitSearch}
         />
-        <TouchableOpacity style={styles.icon} onPress={submitSearch}>
-          <Icons buscar/>
-        </TouchableOpacity>
+        {icon&&
+          <View style={styles.icon}>
+          {icon}
+        </View>
+        }
+        
       </View>
     
   )
@@ -41,7 +36,7 @@ const styles=StyleSheet.create({
     nobackground:{
         backgroundColor:'transparent', 
     },
-    search:{
+    input:{
         borderWidth:1,
         paddingVertical:10,
         paddingHorizontal:20,

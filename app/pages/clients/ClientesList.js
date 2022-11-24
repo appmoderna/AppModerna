@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FlatList, View,StyleSheet } from 'react-native'
+import Icons from '../../components/Icons'
 import SearhInput from '../../components/SearhInput'
-import { getClients,searchClients } from '../../service/ClienteService'
+import StyledInput from '../../components/StyledInput'
+import { searchClients } from '../../service/ClienteService'
 import StyledText from '../../theme/StyledText'
 import ClienteCard from './ClienteCard'
 
