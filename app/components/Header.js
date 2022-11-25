@@ -1,9 +1,10 @@
-import { FAB, Image } from '@rneui/base';
+import { Image } from '@rneui/base';
 import { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Keyboard,View,StyleSheet } from 'react-native'
 import theme from '../theme/theme';
 import Icons from './Icons';
+import Constants from 'expo-constants'
 
 export default function Header ({back,navigation}){
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
@@ -28,7 +29,7 @@ export default function Header ({back,navigation}){
   }, []);
 
     return (
-      <View>
+      <View style={styles.statusbar}>
         <View style={isKeyboardVisible?styles.hide:styles.container}>
           {back&&
             <View style={styles.fab}>
@@ -52,6 +53,9 @@ const styles = StyleSheet.create({
   hide:{
     display:'none'
   },  
+  statusbar:{
+    marginTop:Constants.statusBarHeight,
+  },
   container: {
     justifyContent:'center',
     alignItems:'center',

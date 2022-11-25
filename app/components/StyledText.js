@@ -14,6 +14,9 @@ const styles=StyleSheet.create({
     title:{
         fontSize:theme.fontSize.title,
     },
+    subtitle:{
+        fontSize:theme.fontSize.subtitle,
+    },
     heading:{
         fontSize:theme.fontSize.heading
     },

@@ -3,19 +3,21 @@ import React, { useState } from 'react'
 import { ScrollView } from 'react-native'
 import { Alert } from 'react-native'
 import { View,StyleSheet } from 'react-native'
+import Header from '../../components/Header'
 import StyledButton from '../../components/StyledButton'
 import StyledInput from '../../components/StyledInput'
 import StyledText from '../../components/StyledText'
 import { registerClient } from '../../service/ClienteService'
 
-export default function RegistroCliente() {
-  const [cedula, setCedula] = useState('')
+export default function RegistroCliente({route,navigate}) {
+  const cliente = route?.params?.cliente
+  const [cedula, setCedula] = useState(cliente?cliente.cedula:'')
   const [errorCedula, setErrorCedula] = useState('')
-  const [nombre, setNombre] = useState('')
+  const [nombre, setNombre] = useState(cliente?cliente.nombre:'')
   const [errorNombre, setErrorNombre] = useState('')
-  const [direccion, setDireccion] = useState('')
+  const [direccion, setDireccion] = useState(cliente?cliente.direccion:'')
   const [errorDireccion, setErrorDireccion] = useState('')
-  const [telefono, setTelefono] = useState('')
+  const [telefono, setTelefono] = useState(cliente?cliente.telefono:'')
   const [errorTelefono, setErrorTelefono] = useState('')
 
   const validate=()=>{   
@@ -52,17 +54,30 @@ export default function RegistroCliente() {
       setErrorTelefono('Debe ingresar el teléfono del cliente')
       return true
     }
-    if(direccion.length>10){
+    if(telefono.length>10){
       setErrorTelefono('Este campo no puede tener más de 10 caracteres')
+      return true
+    }
+    if(telefono.length<9){
+      setErrorTelefono('Este campo no puede tener menos de 9 caracteres')
+      return true
+    }
+    const telfdigits=telefono.slice(0,2)
+    if(telefono.length===10 && telfdigits!=='09'){
+      setErrorTelefono('Teléfonos celulares deben iniciar con 09')
+      return true
+    }
+    if(telefono.length===9 && false){
+      setErrorTelefono('Teléfonos convencionales deben tener el código de su provincia')
       return true
     }
     return false
   }
+
   const register=async()=>{
     if(validate()){
       return
     }
-    Alert.alert('saved')
     const cliente={
       nombre:nombre,
       apellido:nombre,
@@ -72,6 +87,7 @@ export default function RegistroCliente() {
     }
     console.log(cliente)
     await registerClient(cliente)
+    Alert.alert('Registrado','El usuario '+nombre+" ha sido registrado")
   }
   return (
     <ScrollView style={styles.container}>
@@ -81,9 +97,10 @@ export default function RegistroCliente() {
         <View style={styles.inputgroup}>
           <StyledInput value={cedula} onChangeText={setCedula} label={'Cédula o RUC'} numeric
           errorMessage={errorCedula}  />
-          <StyledInput value={nombre} onChangeText={setNombre} label={'Apellidos y Nombres'} mayus
+          <StyledInput value={nombre} 
+          onChangeText={setNombre} label={'Apellidos y Nombres'} mayus
           errorMessage={errorNombre} />
-          <StyledInput value={direccion} onChangeText={setDireccion}  label={'Dirección'} mayus
+          <StyledInput value={direccion} onChangeText={(e)=>setDireccion(e.toUpperCase())}  label={'Dirección'} mayus
           errorMessage={errorDireccion} />
           <StyledInput value={telefono} onChangeText={setTelefono} label={'Teléfono'} numeric
           errorMessage={errorTelefono}/>
@@ -91,7 +108,7 @@ export default function RegistroCliente() {
         <View style={styles.buttongroup}>
           <StyledButton title='Guardar' onPress={register} secondary/>
         </View>
-    </ScrollView>
+    </ScrollView>    
   )
 }
 const styles = StyleSheet.create({

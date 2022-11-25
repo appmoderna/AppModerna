@@ -10,7 +10,7 @@ import StyledText from './StyledText'
 //si no se manda un placeHolder, se pondrá por defecto Buscar
 //si no se manda un label, no se mostrara nada en la parte superior derecha
 //onSubmit se ejecuta cuando se toca el botón o cuando se manda el texto del input
-export default function SearhInput({label,placeHolder,searchRef,onChangeText,onSubmit,style}) {
+export default function SearhInput({label,placeHolder,value,onChangeText,onSubmit,style}) {
 
     const submitSearch=()=>{
       if(onSubmit){
@@ -23,14 +23,8 @@ export default function SearhInput({label,placeHolder,searchRef,onChangeText,onS
           <View style={styles.label}><StyledText small color={theme.colors.inputcolor}>{label}</StyledText></View>
         }
         <Input  placeholder={placeHolder?placeHolder:'Buscar'}
-          onChangeText={(e)=>{
-            if(searchRef){
-              searchRef.current=e?e:''
-            }
-            if(onChangeText){
-              onChangeText()
-            }
-          }}
+          value={value}
+          onChangeText={onChangeText}
           onSubmitEditing={submitSearch}
           inputContainerStyle={styles.search}
           rightIcon={

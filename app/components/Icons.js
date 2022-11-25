@@ -2,12 +2,14 @@ import React from 'react'
 import { StyleSheet} from 'react-native'
 import { Icon } from '@rneui/base'
 
-const deleteIcon={type:'ionicon',name:'log-in-outline'}
+const deleteIcon={type:'ant-design',name:'delete'}
 const searchIcon={type:'fontisto',name:'search'}
 const checkIcon={type:'octicon',name:'check-circle-fill'}
 const passwordIcon={type:'antdesign',name:'eye'}
 const backIcon={type:'ionicon',name:'arrow-back-circle-sharp'}
-const Icons =({eliminar,buscar,check,color,size,style,password,back})=>{
+const editIcon={type:'ant-design',name:'edit'}
+
+const Icons =({eliminar,buscar,check,color,size,style,password,back,edit})=>{
     let icon=deleteIcon
     if(eliminar){
         icon=deleteIcon
@@ -23,6 +25,9 @@ const Icons =({eliminar,buscar,check,color,size,style,password,back})=>{
     }
     if(back){
         icon=backIcon
+    }
+    if(edit){
+        icon=editIcon
     }
     return (
         <Icon

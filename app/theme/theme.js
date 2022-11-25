@@ -17,7 +17,7 @@ const theme ={
         heading:32,
         subheading:26,
         title:20,
-        subtitle:16,
+        subtitle:17,
         small:12.5,
     }, 
     fonts:{

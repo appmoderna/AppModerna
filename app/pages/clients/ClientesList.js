@@ -1,4 +1,4 @@
-import { Input } from '@rneui/base'
+import { FAB, Input } from '@rneui/base'
 import React, { useEffect, useRef, useState } from 'react'
 import { FlatList, View,StyleSheet } from 'react-native'
 import Icons from '../../components/Icons'
@@ -11,38 +11,37 @@ import StyledButton from '../../components/StyledButton'
 
 const MINIMUN_ELEMENTS_FOR_SEARCH=4
 
-export default function ClientesList() {
+export default function ClientesList({navigation}) {
   const [clientes, setClientes] = useState([])
-  
-  const searchRef=useRef('')
+  const [search, setSearch] = useState('')
 
   const buscarClientes =async ()=>{
-    const response=await searchClients(searchRef.current)
+    const response=await searchClients(search)
     setClientes(response)
   }
 
   useEffect(()=>{
-    console.log('useref: '+searchRef.current)
     buscarClientes()
-  },[searchRef])
+  },[search])
 
   return (
     <View style={styles.container}>
         <StyledText heading center bold modernaPrimary style={styles.margin20}>CLIENTES</StyledText>
         {
-          (MINIMUN_ELEMENTS_FOR_SEARCH<clientes.length || searchRef.current!=='') &&     
-          <SearhInput searchRef={searchRef} label='Busqueda' onSubmit={buscarClientes}/>
+          (MINIMUN_ELEMENTS_FOR_SEARCH<clientes.length || search!=='') &&     
+          <SearhInput value={search} onChangeText={setSearch} label='Busqueda' onSubmit={buscarClientes}/>
         }
       {(!clientes || clientes.length===0)?
         <View style={styles.container}>
-          <StyledText center title bold>{searchRef.current!==''?'No hay resultados':'No hay clientes'}</StyledText>
+          <StyledText center title bold>{search!==''?'No hay resultados':'No hay clientes'}</StyledText>
         </View>
       :
         <FlatList data={clientes}
           renderItem={({item})=>{
-          return <ClienteCard cliente={item}/>
+          return <ClienteCard cliente={item} navigation={navigation}/>
         }} style={styles.list}/>
       }
+      <FAB placement='right' onPress={()=>navigation.navigate('RegistroCliente')}>+</FAB>
     </View>
   )
 }
