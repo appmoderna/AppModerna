@@ -1,8 +1,7 @@
-import { ListItem } from '@rneui/base'
 import React from 'react'
-import { TouchableHighlight,StyleSheet, View ,Text, Alert, TouchableNativeFeedback, TouchableOpacity} from 'react-native'
-import Icons, { deleteIcon } from '../../components/Icons'
-import StyledText from '../../theme/StyledText'
+import { StyleSheet, View , Alert, TouchableOpacity} from 'react-native'
+import Icons from '../../components/Icons'
+import StyledText from '../../components/StyledText'
 import theme from '../../theme/theme'
 
 export default function ClienteCard({cliente}) {
@@ -46,6 +45,6 @@ const styles=StyleSheet.create({
         justifyContent:'center',
     },
     information:{
-        flex:4,
+        flex:5,
     }
 })

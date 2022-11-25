@@ -6,7 +6,10 @@ const getClients=async ()=>{
 const deleteClient=async()=>{
 
 }
-
+const registerClient=async(client)=>{
+    clientes.push(client)
+    return clientes
+}
 const searchClients=async(criteria)=>{
     if(!criteria || criteria===''){
         return clientes
@@ -21,4 +24,4 @@ const searchClients=async(criteria)=>{
     return results
 }
 
-export {getClients,searchClients,deleteClient}
+export {getClients,searchClients,deleteClient,registerClient}

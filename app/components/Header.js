@@ -1,8 +1,11 @@
-import { Image } from '@rneui/base';
+import { FAB, Image } from '@rneui/base';
 import { useEffect, useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { Keyboard,View,StyleSheet } from 'react-native'
+import theme from '../theme/theme';
+import Icons from './Icons';
 
-export default function Header (){
+export default function Header ({back,navigation}){
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -27,6 +30,15 @@ export default function Header (){
     return (
       <View>
         <View style={isKeyboardVisible?styles.hide:styles.container}>
+          {back&&
+            <View style={styles.fab}>
+              <TouchableOpacity onPress={()=>{
+                navigation?.goBack()
+                }}>
+                <Icons back size={40} color={theme.colors.modernaYellow}/>
+              </TouchableOpacity>
+            </View>
+          }
           <Image style={styles.logo} 
             source={require('../../assets/moderna/Logotipo-original.png')
           }/>
@@ -48,7 +60,12 @@ const styles = StyleSheet.create({
   }
   ,logo: {
     resizeMode:'center',
-    width:330,
-    height: 150,
-  },
+    width:300,
+    height: 130,
+  },fab:{
+    zIndex:999,
+    position:'absolute',
+    top:5,
+    left:10,
+  }
 });
