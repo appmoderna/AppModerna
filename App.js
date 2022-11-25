@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import RegistroClientes from './app/pages/RegistroClientes';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import Pedido from './app/pages/Pedido';
+import Pedido from './app/pages/PedidoCliente';
 
 const Stack = createNativeStackNavigator();
 
