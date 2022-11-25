@@ -5,12 +5,20 @@ const theme ={
         textPrimary:'',
         textSecondary:'',
         modernaRed:'#d22630',
-        modernaYellow:'#ecaa20'
+        modernaYellow:'#ecaa20',
+        modernaGreen:'#5BC2A7',
+        lightgray:'#9D9D9D',
+        active:'#5BC2A7',
+        inactive:'#9D9D9D',
+        inputcolor:'#9f9f9f'
     },
     fontSize:{
         body:14,
+        heading:32,
+        subheading:26,
         title:20,
         subtitle:16,
+        small:12.5,
     }, 
     fonts:{
         main:'System'
@@ -18,7 +26,9 @@ const theme ={
     fontWeight:{
         bold:'700',
         bolder:'900',
-        normal:'normal'
+        normal:'500',
+        light:'100',
+        softbold:'600',
     }
 }
 export default theme
