@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import Icons from "../../components/Icons";
 import SearhInput from "../../components/SearhInput";
-import { searchClients } from "../../service/ClienteService";
+import { searchClients } from "../../services/ClienteService";
 import StyledText from "../../components/StyledText";
 import ClienteCard from "./ClienteCard";
 import theme from "../../theme/theme";
@@ -26,7 +26,7 @@ export default function ClientesList({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <StyledText heading center bold modernaPrimary style={styles.title}>
+      <StyledText heading center bold style={styles.title}>
         CLIENTES
       </StyledText>
       {(MINIMUN_ELEMENTS_FOR_SEARCH < clientes.length || search !== "") && (

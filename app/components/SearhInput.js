@@ -1,23 +1,22 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import Icons from "./Icons";
+import { StyleSheet, View } from "react-native";
 import theme from "../theme/theme";
-import { Input } from "@rneui/base";
-import StyledText from "./StyledText";
-import { TextInput } from "react-native-paper";
-import { SearchBar } from "react-native-screens";
+import { HelperText, TextInput } from "react-native-paper";
 
-//Entre las props, la variable searchRef dene ser una referencia (hook useRef)
 //si no se manda un placeHolder, se pondrá por defecto Buscar
 //si no se manda un label, no se mostrara nada en la parte superior derecha
 //onSubmit se ejecuta cuando se toca el botón o cuando se manda el texto del input
+const MAX_LENGTH_SEARCH = 30;
 export default function SearhInput({
   label,
-  placeHolder,
+  placeholder,
   value,
   onChangeText,
   onSubmit,
   style,
+  errorMessage,
+  max_length = MAX_LENGTH_SEARCH,
+  mayus,
 }) {
   const submitSearch = () => {
     if (onSubmit) {
@@ -27,16 +26,28 @@ export default function SearhInput({
   return (
     <View style={style}>
       <TextInput
-        mode="outlined"
+        keyboardType="default"
         label={label}
-        placeholder={placeHolder ? placeHolder : "Buscar"}
         value={value}
-        onChangeText={onChangeText}
-        activeOutlineColor={theme.colors.lightgray}
+        mode="outlined"
+        activeOutlineColor={theme.colors.active}
+        placeholder={placeholder ? placeholder : "Búsqueda"}
+        error={errorMessage}
         onSubmitEditing={submitSearch}
-        inputContainerStyle={styles.search}
-        right={<TextInput.Icon icon="search" />}
+        onChangeText={(e) => {
+          let text = e;
+          if (mayus) {
+            text = text.toUpperCase();
+          }
+          onChangeText(text);
+        }}
+        maxLength={max_length}
+        autoCapitalize={mayus ? "characters" : "sentences"}
+        right={<TextInput.Icon icon="search" onPress={submitSearch} />}
       />
+      <HelperText type="error" visible={errorMessage}>
+        {errorMessage}
+      </HelperText>
     </View>
   );
 }

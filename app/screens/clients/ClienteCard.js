@@ -41,12 +41,6 @@ export default function ClienteCard({ cliente, navigation }) {
                 }
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={editarCliente}>
-              <Icons edit color={theme.colors.modernaYellow} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Icons delete color={theme.colors.modernaRed} />
-            </TouchableOpacity>
           </View>
         </View>
       </TouchableOpacity>
@@ -66,10 +60,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   buttons: {
-    flex: 3,
-    justifyContent: "center",
+    flex: 1,
+    justifyContent: "flex-end",
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
   },
   information: {

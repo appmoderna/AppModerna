@@ -7,7 +7,7 @@ import Header from "../../components/Header";
 import StyledButton from "../../components/StyledButton";
 import StyledInput from "../../components/StyledInput";
 import StyledText from "../../components/StyledText";
-import { registerClient } from "../../service/ClienteService";
+import { registerClient } from "../../services/ClienteService";
 import { es_EC as errors } from "../../commons/texts";
 import Icons from "../../components/Icons";
 
@@ -45,14 +45,14 @@ export default function RegistroCliente({ route, navigation }) {
       setErrorNombre(errors.EMPTY_NAME);
       return true;
     }
-    let wordsCount = nombre.split(" ").length;
-    if (nombre.endsWith(" ")) {
-      wordsCount -= 1;
-    }
-    if (wordsCount < 2) {
-      setErrorNombre(errors.AT_LEAT_1_NAME_LASTNAME);
-      return true;
-    }
+    // let wordsCount = nombre.split(" ").length;
+    // if (nombre.endsWith(" ")) {
+    //   wordsCount -= 1;
+    // }
+    // if (wordsCount < 2) {
+    //   setErrorNombre(errors.AT_LEAT_1_NAME_LASTNAME);
+    //   return true;
+    // }
     if (nombre.length > 40) {
       setErrorNombre(errors.MAX_LENGTH_40);
       return true;
