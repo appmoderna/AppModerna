@@ -1,7 +1,6 @@
-import { prefetchConfiguration } from "react-native-app-auth";
-import { authorize } from "react-native-app-auth";
+import { authorize, prefetchConfiguration } from "react-native-app-auth";
 import { AD_config } from "../../commons/config_azure";
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import StyledButton from "../../components/StyledButton";
 import StyledText from "../../components/StyledText";
@@ -17,6 +16,7 @@ prefetchConfiguration(config);
 
 export default function Auth() {
   const [session, setSession] = useState("");
+
   const login = async () => {
     try {
       const result = await authorize(config);
@@ -26,7 +26,7 @@ export default function Auth() {
     }
   };
   return (
-    <View>
+    <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
       <StyledButton title="Login" onPress={login} />
       <StyledText>Session: {session}</StyledText>
     </View>

@@ -18,7 +18,7 @@ import {
 } from "react-native-paper";
 import Splash from "./app/screens/landing/Splash";
 import Login from "./app/screens/auth/Login";
-import Auth from "./app/screens/auth/auth";
+import Auth from "./app/screens/auth/Auth";
 
 const StackClientes = createNativeStackNavigator();
 const TabsApp = createBottomTabNavigator();

@@ -8,7 +8,10 @@ export const AD_config = {
   ANDROID_REDIRECT_URI: "msauth://com.test.test/9DtNbHJctvXZStn4kYC3Bl5Uzio%3D",
   IOS_REDIRECT_URI: "msauth.com.test.test://auth",
   SIGNATURE_HASH: "9DtNbHJctvXZStn4kYC3Bl5Uzio=",
-  ISSUER: "https://login.microsoftonline.com/" + TENAN_ID + "/v2.0",
+  ISSUER:
+    "https://login.microsoftonline.com/" +
+    "660d74ab-52d0-4edd-b1b6-dfd40b692155" +
+    "/v2.0",
 };
 
 export const msalAndroidConfig = {
@@ -39,7 +42,6 @@ export const msalIOSConfig = {
     },
   ],
 };
-// Log in to get an authentication token
 // Log in to get an authentication token
 const authState = await authorize(config);
 
