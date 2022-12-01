@@ -1,14 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import Header from "./app/components/Header";
-import ClientesList from "./app/pages/clients/ClientesList";
-import PrintingButton from "./app/pages/orders/PrintingButton";
-import RegistroCliente from "./app/pages/clients/RegistroCliente";
+import ClientesList from "./app/screens/clients/ClientesList";
+import RegistroCliente from "./app/screens/clients/RegistroCliente";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import ResumenPedidos from "./app/pages/clients/ResumenPedidos";
+import ResumenPedidos from "./app/screens/clients/ResumenPedidos";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { color, Icon } from "@rneui/base";
 import theme from "./app/theme/theme";
 import Icons from "./app/components/Icons";
@@ -18,12 +16,35 @@ import {
   MD3Colors as DefaultTheme,
   Provider as PaperProvider,
 } from "react-native-paper";
+import Splash from "./app/screens/landing/Splash";
+import Login from "./app/screens/auth/Login";
+import Auth from "./app/screens/auth/auth";
 
 const StackClientes = createNativeStackNavigator();
 const TabsApp = createBottomTabNavigator();
 
 export default function App() {
-  const [sessionUser, setSessionUser] = useState(true);
+  const [sessionUser, setSessionUser] = useState(false);
+  const [appIsReady, setAppIsready] = useState(false);
+
+  useEffect(() => {
+    const inicia = async () => {
+      try {
+        await new Promise((resolve) => {
+          setTimeout(resolve, 2000);
+        });
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setAppIsready(true);
+      }
+    };
+    inicia();
+  });
+  if (!appIsReady) {
+    return <Splash />;
+  }
+
   return (
     <PaperProvider
       settings={{
@@ -31,80 +52,81 @@ export default function App() {
       }}
     >
       <NavigationContainer>
-        {sessionUser ? (
-          <TabsApp.Navigator
-            screenOptions={{
-              header: () => <Header />,
-              tabBarShowLabel: false,
-              tabBarStyle: { backgroundColor: theme.colors.modernaRed },
-            }}
-          >
-            <TabsApp.Screen
-              name="ClientesStack"
-              component={ClientesStackNavigation}
-              options={{
-                tabBarIcon: () => (
-                  <Icon
-                    name="users"
-                    type="font-awesome"
-                    edit
-                    color={theme.colors.white}
-                  />
-                ),
-              }}
-            />
-            <TabsApp.Screen
-              name="ClientesStack2"
-              component={ClientesStackNavigation}
-              options={{
-                tabBarIcon: () => (
-                  <Icon
-                    name="cloud-offline"
-                    type="ionicon"
-                    edit
-                    color={theme.colors.white}
-                  />
-                ),
-              }}
-            />
-            <TabsApp.Screen
-              name="ClientesStack3"
-              component={ClientesStackNavigation}
-              options={{
-                tabBarIcon: () => (
-                  <Icon
-                    name="users"
-                    type="font-awesome"
-                    edit
-                    color={theme.colors.white}
-                  />
-                ),
-              }}
-            />
-            <TabsApp.Screen
-              name="ClientesStack4"
-              component={ClientesStackNavigation}
-              options={{
-                tabBarIcon: () => (
-                  <Icon
-                    name="users"
-                    type="font-awesome"
-                    edit
-                    color={theme.colors.white}
-                  />
-                ),
-              }}
-            />
-          </TabsApp.Navigator>
-        ) : (
-          <Text>Must Log in</Text>
-        )}
-
+        {sessionUser ? <AppTabNavigation /> : <Auth />}
         <StatusBar />
       </NavigationContainer>
     </PaperProvider>
   );
 }
+
+const AppTabNavigation = () => {
+  return (
+    <TabsApp.Navigator
+      screenOptions={{
+        header: () => <Header />,
+        tabBarShowLabel: false,
+        tabBarStyle: { backgroundColor: theme.colors.modernaRed },
+      }}
+    >
+      <TabsApp.Screen
+        name="ClientesStack"
+        component={ClientesStackNavigation}
+        options={{
+          tabBarIcon: () => (
+            <Icon
+              name="users"
+              type="font-awesome"
+              edit
+              color={theme.colors.white}
+            />
+          ),
+        }}
+      />
+      <TabsApp.Screen
+        name="ClientesStack2"
+        component={ClientesStackNavigation}
+        options={{
+          tabBarIcon: () => (
+            <Icon
+              name="cloud-offline"
+              type="ionicon"
+              edit
+              color={theme.colors.white}
+            />
+          ),
+        }}
+      />
+      <TabsApp.Screen
+        name="ClientesStack3"
+        component={ClientesStackNavigation}
+        options={{
+          tabBarIcon: () => (
+            <Icon
+              name="users"
+              type="font-awesome"
+              edit
+              color={theme.colors.white}
+            />
+          ),
+        }}
+      />
+      <TabsApp.Screen
+        name="ClientesStack4"
+        component={ClientesStackNavigation}
+        options={{
+          tabBarIcon: () => (
+            <Icon
+              name="users"
+              type="font-awesome"
+              edit
+              color={theme.colors.white}
+            />
+          ),
+        }}
+      />
+    </TabsApp.Navigator>
+  );
+};
 
 const ClientesStackNavigation = () => {
   return (
