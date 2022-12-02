@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import RegistroClientes from './app/pages/RegistroClientes';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Pedido from './app/pages/PedidoCliente';
+import Carrito from './app/pages/CarritoCliente';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +12,14 @@ const SplashNavigation = () => {
     <Stack.Screen
       name='ClientesPedido'
       component={Pedido}
+      options={{
+        headerShown:false,
+      }}
+    />
+
+    <Stack.Screen
+      name='CarritoClientes'
+      component={Carrito}
       options={{
         headerShown:false,
       }}
