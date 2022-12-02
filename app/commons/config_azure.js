@@ -1,12 +1,13 @@
 export const AD_config = {
   TENAN_ID: "660d74ab-52d0-4edd-b1b6-dfd40b692155",
   GRAND_TYPE: "DEFAULT",
-  CLIENTE_ID: "75f3fb39-795c-4fc9-9da3-ea469558d58b",
-  CLIENTE_SECRET: "psa8Q~rGFgVNlg9sCqyunZZOOTjNt37Ui3EZGaN-",
+  CLIENTE_ID: "774502e5-20ff-4d43-9a7b-ffc5a336275c",
+  CLIENTE_SECRET: "aK~8Q~yYeaYudPFZ5zM8HRmQEqd1FABYWTt70c0R",
   SCOPES: "user.read openid profile offline_access",
   SCOPE_ARRAY: ["openid", "profile", "email", "offline_access"],
-  ANDROID_REDIRECT_URI: "msauth://com.test.test/9DtNbHJctvXZStn4kYC3Bl5Uzio%3D",
-  IOS_REDIRECT_URI: "msauth.com.test.test://auth",
+  ANDROID_REDIRECT_URI: "msauth://com.moderna/9DtNbHJctvXZStn4kYC3Bl5Uzio%3D",
+  IOS_REDIRECT_URI: "msauth.com.moderna://auth",
+
   SIGNATURE_HASH: "9DtNbHJctvXZStn4kYC3Bl5Uzio=",
   ISSUER:
     "https://login.microsoftonline.com/" +
@@ -43,9 +44,10 @@ export const msalIOSConfig = {
   ],
 };
 // Log in to get an authentication token
-const authState = await authorize(config);
+const authState = async () => await authorize(config);
 
 // Refresh token
-const refreshedState = await refresh(config, {
-  refreshToken: authState.refreshToken,
-});
+const refreshedState = async () =>
+  await refresh(config, {
+    refreshToken: authState.refreshToken,
+  });

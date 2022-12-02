@@ -1,9 +1,8 @@
 import { Image } from "@rneui/base";
 import { useEffect, useState } from "react";
-import { Dimensions, TouchableOpacity } from "react-native";
+import { Dimensions } from "react-native";
 import { Keyboard, View, StyleSheet } from "react-native";
 import theme from "../theme/theme";
-import Icons from "./Icons";
 import Constants from "expo-constants";
 
 export default function Header({ back, navigation, scale = 1, hide = true }) {
@@ -35,8 +34,8 @@ export default function Header({ back, navigation, scale = 1, hide = true }) {
           style={[
             styles.logo,
             {
-              height: 120 * scale,
-              width: Dimensions.get("window").width - 120 + 120 * scale,
+              height: 110 * scale,
+              width: Dimensions.get("window").width - 120,
             },
           ]}
           source={require("../../assets/moderna/Logotipo-original.png")}
@@ -61,6 +60,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
+    marginVertical: 20,
     resizeMode: "center",
   },
 });

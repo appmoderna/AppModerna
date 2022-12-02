@@ -38,6 +38,9 @@ export default function StyledInput({
         placeholder={placeHolder ? placeHolder : "Escribe aquí"}
         error={errorMessage}
         onChangeText={(e) => {
+          if (!onChangeText) {
+            return;
+          }
           let text = e;
           if (mayus) {
             text = text.toUpperCase();

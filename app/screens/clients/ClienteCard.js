@@ -26,9 +26,19 @@ export default function ClienteCard({ cliente, navigation }) {
       <TouchableOpacity onPress={detalleCliente}>
         <View style={styles.horizontal}>
           <View style={styles.information}>
-            <StyledText softbold>{cliente.nombre}</StyledText>
-            <StyledText>{cliente.apellido}</StyledText>
-            <StyledText light>{cliente.dni}</StyledText>
+            <StyledText light style={{ paddingLeft: 7 }}>
+              {cliente.dni}
+            </StyledText>
+            <View style={styles.iconwithtext}>
+              <Icons user size={18} style={{ paddingRight: 4 }} />
+              <StyledText bold>
+                {cliente.nombre} {cliente.apellido}
+              </StyledText>
+            </View>
+            <View style={styles.iconwithtext}>
+              <Icons address size={20} style={{ paddingRight: 4 }} />
+              <StyledText bold>{cliente.direccion}</StyledText>
+            </View>
           </View>
           <View style={styles.buttons}>
             <TouchableOpacity onPress={sincronizar}>
@@ -51,8 +61,7 @@ const styles = StyleSheet.create({
   card: {
     paddingVertical: 5,
     paddingHorizontal: 8,
-    borderWidth: 2,
-    borderRadius: 10,
+    borderBottomWidth: 1,
     marginVertical: 3,
   },
   horizontal: {
@@ -67,5 +76,9 @@ const styles = StyleSheet.create({
   },
   information: {
     flex: 6,
+  },
+  iconwithtext: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
 });

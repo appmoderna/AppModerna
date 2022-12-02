@@ -1,6 +1,6 @@
-import { Input } from "@rneui/base";
+import { ButtonGroup, Input } from "@rneui/base";
 import React, { useState } from "react";
-import { ScrollView } from "react-native";
+import { Dimensions, ScrollView } from "react-native";
 import { Alert } from "react-native";
 import { View, StyleSheet } from "react-native";
 import Header from "../../components/Header";
@@ -10,8 +10,10 @@ import StyledText from "../../components/StyledText";
 import { registerClient } from "../../services/ClienteService";
 import { es_EC as errors } from "../../commons/texts";
 import Icons from "../../components/Icons";
+import { Button } from "react-native-paper";
 
 export default function RegistroCliente({ route, navigation }) {
+  const screenWidth = Dimensions.get("window").width;
   const cliente = route?.params?.cliente;
 
   const [cedula, setCedula] = useState(cliente ? cliente.cedula : "");
@@ -109,7 +111,7 @@ export default function RegistroCliente({ route, navigation }) {
     <ScrollView style={styles.container}>
       <View style={styles.title}>
         <StyledText heading center bold>
-          {cliente ? "EDITAR" : "REGISTRO"}
+          {cliente ? "EDITAR" : "REGISTRO CLIENTE"}
         </StyledText>
       </View>
       <View style={styles.inputgroup}>
@@ -153,7 +155,7 @@ export default function RegistroCliente({ route, navigation }) {
         <StyledInput
           max_length={10}
           numeric
-          label="Teléfono"
+          label="                                              "
           placeholder="Ingrese número de teléfono"
           value={telefono}
           onChangeText={(e) => {
@@ -164,7 +166,20 @@ export default function RegistroCliente({ route, navigation }) {
         />
       </View>
       <View style={styles.buttongroup}>
-        <StyledButton title="Guardar" onPress={register} primary />
+        <StyledButton
+          title="Eliminar cliente"
+          onPress={register}
+          style={{ width: screenWidth / 2.7 }}
+          secondary
+          big
+        />
+        <StyledButton
+          title="Guardar"
+          style={{ width: screenWidth / 2.7 }}
+          onPress={register}
+          primary
+          big
+        />
       </View>
     </ScrollView>
   );
@@ -184,6 +199,7 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   buttongroup: {
-    paddingHorizontal: 100,
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });

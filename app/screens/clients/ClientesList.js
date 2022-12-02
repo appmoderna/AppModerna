@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   list: {
+    marginTop: 0,
     marginBottom: 50,
     paddingHorizontal: 15,
   },
@@ -77,6 +78,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   search: {
-    marginBottom: 20,
+    marginBottom: 0,
   },
 });

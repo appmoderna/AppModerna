@@ -22,6 +22,13 @@ import Auth from "./app/screens/auth/Auth";
 
 const StackClientes = createNativeStackNavigator();
 const TabsApp = createBottomTabNavigator();
+const paperTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    text: "orange",
+  },
+};
 
 export default function App() {
   const [sessionUser, setSessionUser] = useState(false);
@@ -52,7 +59,7 @@ export default function App() {
       }}
     >
       <NavigationContainer>
-        {sessionUser ? <AppTabNavigation /> : <Auth />}
+        {true ? <AppTabNavigation /> : <Auth />}
         <StatusBar />
       </NavigationContainer>
     </PaperProvider>
