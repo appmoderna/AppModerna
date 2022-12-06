@@ -62,7 +62,8 @@ export default function App() {
       }}
     >
       <NavigationContainer>
-        {true ? <PedidoResumen /> : <Login />}
+        {/* AppTabNavigation */}
+        {true ? <AppTabNavigation /> : <Login />}
         <StatusBar />
       </NavigationContainer>
     </PaperProvider>

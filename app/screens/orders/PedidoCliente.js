@@ -24,11 +24,12 @@ import ClienteCabecera from "../../components/ClienteCabecera";
 export default function PedidoCliente({ navigation, route }) {
   const cliente = route?.params?.cliente;
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
-  const [busqueda, setBusqueda] = useState();
+  // const [busqueda, setBusqueda] = useState();
   const [producto, setProducto] = useState("");
+  const [errorbusqueda, setErrorbusqueda] = useState("")
+  const [error, setError] = useState(false);
   const [cantidadproducto, setCantidadProducto] = useState(0);
   const [errorCantidadProducto, setErrorCantidadProducto] = useState("");
-  const [cantidadconfirmada, setCantidadConfirmada] = useState(0);
   const [preciototal, setPrecioTotal] = useState("");
   //let hasErrors=false;
   const [errorproducto, setErrorProducto] = useState("");
@@ -41,8 +42,28 @@ export default function PedidoCliente({ navigation, route }) {
     { producto: "Banana", value: "banana" },
   ]);
 
+
+  const validate = () => {
+    if (cantidadproducto=="" || cantidadproducto==null) {
+      setError(true);
+      
+      setErrorCantidadProducto("Ingrese un cantidad")
+      return true;
+    }   
+
+    if(productoSeleccionado==null){
+      setErrorbusqueda("Escoja un producto");
+      return true;
+    }
+    
+    return false;
+  };
+
   //-----------------------
   const agregar = () => {
+    // if(validate()){
+    //   return;
+    // }
     agregarproducto({
       producto: productoSeleccionado,
       cantidad: cantidadproducto,
@@ -50,42 +71,22 @@ export default function PedidoCliente({ navigation, route }) {
     navigation?.navigate("PedidoResumen");
   };
 
-  const validate = () => {
-    if (producto == "" || producto == null) {
-      setErrorProducto("Debe introducir un");
-    }
-  };
+ 
   useEffect(() => {
     console.log("producto seleccionado: " + productoSeleccionado);
   }, [productoSeleccionado]);
 
-  const hasErrors = () => {
-    // setErrorProducto('Excedes los caracteres permitidos')
-    // if (producto.length > 10) {
-    //     console.log("Se sobrepaso")
-    //  }
-    return producto.length > 10;
-  };
 
   const [productos, setProductos] = useState([
-    {
-      label: "Harina",
-      value: { nombre: "Harina", precio: 2.5, stock: 20 },
-      key: 1,
-    },
-    {
-      label: "Pan",
-      value: { nombre: "Pan", precio: 1.5, stock: 100 },
-      key: 2,
-    },
-    {
-      label: "Polvo de Hornear",
-      value: { nombre: "Polvo de Hornear", precio: 0.5, stock: 120 },
-      key: 3,
-    },
+    {label: "Pan",value: { nombre: "Pan", precio: 0.5, stock: 120 }},
+    {label: "Harina",value: { nombre: "Harina", precio: 1.5, stock: 20 }},
+    {label: "Harina Premium",value: { nombre: "Harina Premium", precio: 0.5, stock: 10 }},
+    {label: "Pan Integral",value: { nombre: "Pan Integral", precio: 2.5, stock: 12 }},
+    {label: "Pacari",value: { nombre: "Pacari", precio: 2, stock: 25 }}
   ]);
 
   return (
+    
     <View style={styles.container}>
       <StyledText heading bold>
         PEDIDO
@@ -99,8 +100,8 @@ export default function PedidoCliente({ navigation, route }) {
         setValue={setProductoSeleccionado}
         setItems={setProductos}
         searchable={true}
-        key={(index) => {
-          return index;
+        key={(item) => {
+          return item;
         }}
         placeholder=" Busqueda"
         searchPlaceholder="Busque un producto"
@@ -111,8 +112,14 @@ export default function PedidoCliente({ navigation, route }) {
         }}
         // searchContainerStyle={{borderRadius:5}}
         searchTextInputStyle={{ width: 35 }}
+        
         // ArrowDownIconComponent={({style}) => <Icon name="search" style={{paddingHorizontal:5}} />}
       />
+      <HelperText
+      type="error"
+      style={{ marginTop: -5, marginBottom: 5 }}
+      visible={error}
+      >{errorbusqueda}</HelperText>
       <ScrollView>
         <View style={styles.inputGroup}>
           <StyledInput
@@ -202,9 +209,9 @@ const styles = StyleSheet.create({
   cajaCabecera: {
     flex: 2,
     // backgroundColor: 'cyan',
-    alignItems: "center",
-    justifyContent: "flex-end",
-    paddingBottom: 15,
+    //alignItems: "center",
+    //justifyContent: "flex-end",
+    //paddingBottom: 15,
   },
   txtinput: {
     borderWidth: 1,
@@ -237,7 +244,7 @@ const styles = StyleSheet.create({
   },
   input: {
     maxHeight: 80,
-    width: Dimensions.get("window").width - 80,
-    marginVertical: 3,
+    //width: Dimensions.get("window").width - 80,
+    // marginVertical: 3,
   },
 });

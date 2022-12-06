@@ -9,8 +9,7 @@ export default function ResumenPedidos({ route, navigation }) {
   return (
     <View style={styles.container}>
       <StyledText heading modernaPrimary center bold>
-        RESUMEN PEDIDOS
-      </StyledText>
+        RESUMEN PEDIDOS      </StyledText>
       <View style={styles.cliente}>
         <StyledText center subtitle light>
           {cliente?.nombre}{" "}

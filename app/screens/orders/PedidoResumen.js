@@ -10,13 +10,25 @@ import StyledText from "../../theme/StyledText";
 import { Card, Title, Paragraph, List } from "react-native-paper";
 import { ListItem, Avatar, Button, Icon } from "@rneui/base";
 import theme from "../../theme/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { calcularFactura, traerproductos } from "../../services/ProductoItem";
 import PedidoCard from "./PedidoCard";
 
 export default function PedidoResumen() {
   const [factura, setFactura] = useState();
   const [carrito, setCarrito] = useState([]);
+  const [currentDate, setCurrentDate] = useState('');
+  useEffect(() => {
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+  
+    setCurrentDate(
+      date + '/' + month + '/' + year 
+    );
+  }, []);
+
+
   const cargarCarrito = () => {
     setCarrito(traerproductos());
     setFactura(calcularFactura());
@@ -30,6 +42,7 @@ export default function PedidoResumen() {
     <View style={styles.container}>
       <View style={styles.cajaCabecera}>
         <StyledText heading>RESUMEN DE PEDIDO</StyledText>
+        <Text>{currentDate}</Text>
       </View>
       <View style={styles.cajaCuerpo}>
         {/* ______________________________________________________________________________________________ */}
@@ -40,17 +53,28 @@ export default function PedidoResumen() {
             fontSize: 25,
           }}
         >
-          $ 13.52
+          $ {factura?.subtotal + factura?.iva}
         </Text>
         <View style={styles.cajaTitulo}>
           <Text style={{ color: "#ffff" }}>Resumen: </Text>
         </View>
+        {/* ______________________________________________________________________________________________ */}
         <View style={styles.cajaFinal}>
-          <Text>Subtotal: {factura?.subtotal} </Text>
-          <Text>IVA : {factura?.iva} </Text>
-          <Text>Total : {factura?.subtotal + factura?.iva}</Text>
-        </View>
 
+          <View style={{ flexDirection: 'row', /*backgroundColor: 'green'*/ }}>
+            <View style={{/*backgroundColor:'green',*/justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+              <Text style={{fontWeight:'bold'}}>Subtotal:</Text>
+              <Text style={{fontWeight:'bold'}}>IVA :</Text>
+              <Text style={{fontWeight:'bold'}}>Total :</Text>
+            </View>
+            <View style={{/*backgroundColor:'red',*/justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+              <Text>{factura?.subtotal}</Text>
+              <Text>{factura?.iva}</Text>
+              <Text>{factura?.subtotal + factura?.iva}</Text>
+            </View>
+          </View>
+        </View>
+        {/* ______________________________________________________________________________________________ */}
         <View style={styles.cajaTitulo}>
           <Text style={{ color: "#ffff" }}>Lista Productos: </Text>
         </View>
@@ -65,7 +89,7 @@ export default function PedidoResumen() {
           keyExtractor={(item) => {
             return item.producto;
           }}
-          style={{ height: 110 }}
+          
         />
         <View style={styles.cajaBotones}>
           <Button
@@ -102,11 +126,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cajaCabecera: {
-    flex: 2,
+    //marginBottom:25,
+   // flex: 2,
     // backgroundColor: 'cyan',
     alignItems: "center",
-    justifyContent: "flex-end",
-    paddingBottom: 25,
+    //justifyContent: "flex-end",
+   // paddingBottom: 25,
   },
   cajaCuerpo: {
     flex: 6,
@@ -123,8 +148,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 25,
-    paddingBottom: 25,
+    paddingTop: 80,
+    paddingBottom: 45,
   },
   cajaFinal: {
     justifyContent: "center",
