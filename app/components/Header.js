@@ -34,7 +34,7 @@ export default function Header({ back, navigation, scale = 1, hide = true }) {
           style={[
             styles.logo,
             {
-              height: 110 * scale,
+              height: 70 * scale,
               width: Dimensions.get("window").width - 120,
             },
           ]}
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: -10,
   },
   logo: {
     marginVertical: 20,

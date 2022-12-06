@@ -15,7 +15,7 @@ export default function StyledInput({
   label,
   mayus,
   value,
-  placeHolder,
+  placeholder,
   onChangeText,
   style,
   icon,
@@ -24,6 +24,7 @@ export default function StyledInput({
   numeric,
   email,
   max_length = 80,
+  noeditable,
 }) {
   return (
     <View style={style}>
@@ -35,7 +36,7 @@ export default function StyledInput({
         value={value}
         mode="outlined"
         activeOutlineColor={theme.colors.active}
-        placeholder={placeHolder ? placeHolder : "Escribe aquí"}
+        placeholder={placeholder ? placeholder : "Escribe aquí"}
         error={errorMessage}
         onChangeText={(e) => {
           if (!onChangeText) {
@@ -50,11 +51,16 @@ export default function StyledInput({
         maxLength={max_length}
         secureTextEntry={password}
         autoCapitalize={mayus ? "characters" : "sentences"}
+        editable={noeditable ? false : true}
       />
       <TextInput.Icon>
         {password ? <Icons password /> : icon && <View>{icon}</View>}
       </TextInput.Icon>
-      <HelperText type="error" visible={errorMessage}>
+      <HelperText
+        type="error"
+        style={{ marginTop: -5, marginBottom: 5 }}
+        visible={errorMessage}
+      >
         {errorMessage}
       </HelperText>
     </View>

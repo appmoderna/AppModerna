@@ -10,7 +10,7 @@ const theme = {
     lightgray: "#9D9D9D",
     active: "#5BC2A7",
     inactive: "#9D9D9D",
-    inputcolor: "#9f9f9f",
+    inputcolor: "#CCCCCC",
     white: "#fff",
   },
   fontSize: {

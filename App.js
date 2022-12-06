@@ -20,6 +20,8 @@ import Splash from "./app/screens/landing/Splash";
 import Login from "./app/screens/auth/Login";
 import Auth from "./app/screens/auth/Auth";
 import PedidosList from "./app/screens/orders/PedidosList";
+import PedidoCliente from "./app/screens/orders/PedidoCliente";
+import PedidoResumen from "./app/screens/orders/PedidoResumen";
 
 const StackClientes = createNativeStackNavigator();
 const TabsApp = createBottomTabNavigator();
@@ -60,7 +62,7 @@ export default function App() {
       }}
     >
       <NavigationContainer>
-        {false ? <AppTabNavigation /> : <PedidosList />}
+        {true ? <PedidoResumen /> : <Login />}
         <StatusBar />
       </NavigationContainer>
     </PaperProvider>
@@ -147,7 +149,8 @@ const ClientesStackNavigation = () => {
         name="RegistroCliente"
         component={RegistroCliente}
       />
-      <StackClientes.Screen name="ResumenPedidos" component={ResumenPedidos} />
+      <StackClientes.Screen name="AgregarPedido" component={PedidoCliente} />
+      <StackClientes.Screen name="PedidoResumen" component={PedidoResumen} />
     </StackClientes.Navigator>
   );
 };

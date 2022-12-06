@@ -23,37 +23,39 @@ export default function ClienteCard({ cliente, navigation }) {
   };
   return (
     <View style={styles.card}>
-      <TouchableOpacity onPress={detalleCliente}>
-        <View style={styles.horizontal}>
-          <View style={styles.information}>
-            <StyledText light style={{ paddingLeft: 7 }}>
-              {cliente.dni}
+      {/* <TouchableOpacity onPress={editarCliente}> */}
+      <View style={styles.horizontal}>
+        <View style={styles.information}>
+          <StyledText light style={{ paddingLeft: 7 }}>
+            {cliente.dni}
+          </StyledText>
+          <View style={styles.iconwithtext}>
+            <Icons user size={18} style={{ paddingRight: 4 }} />
+            <StyledText bold>
+              {cliente.nombre} {cliente.apellido}
             </StyledText>
-            <View style={styles.iconwithtext}>
-              <Icons user size={18} style={{ paddingRight: 4 }} />
-              <StyledText bold>
-                {cliente.nombre} {cliente.apellido}
-              </StyledText>
-            </View>
-            <View style={styles.iconwithtext}>
-              <Icons address size={20} style={{ paddingRight: 4 }} />
-              <StyledText bold>{cliente.direccion}</StyledText>
-            </View>
           </View>
-          <View style={styles.buttons}>
-            <TouchableOpacity onPress={sincronizar}>
-              <Icons
-                check
-                color={
-                  cliente.sincronizado
-                    ? theme.colors.active
-                    : theme.colors.inactive
-                }
-              />
-            </TouchableOpacity>
+          <View style={styles.iconwithtext}>
+            <Icons
+              address
+              size={20}
+              style={{ paddingRight: 4, paddingLeft: 1.5 }}
+            />
+            <StyledText bold>{cliente.direccion}</StyledText>
           </View>
         </View>
-      </TouchableOpacity>
+        <View style={styles.buttons}>
+          {/* <TouchableOpacity onPress={sincronizar}> */}
+          <Icons
+            check
+            color={
+              cliente.sincronizado ? theme.colors.active : theme.colors.inactive
+            }
+          />
+          {/* </TouchableOpacity> */}
+        </View>
+      </View>
+      {/* </TouchableOpacity> */}
     </View>
   );
 }

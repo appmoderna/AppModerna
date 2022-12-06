@@ -6,12 +6,13 @@ const FONT_AWESOME_5 = "font-awesome-5";
 const FONTISTO = "fontisto";
 const IONICON = "ionicon";
 const ENTYPO = "entypo";
-const deleteIcon = { type: "ant-design", name: "delete" };
+const FONTAWESOME = "font-awesome";
+const deleteIcon = { type: FONTAWESOME, name: "trash" };
 const searchIcon = { type: FONTISTO, name: "search" };
 const checkIcon = { type: "octicon", name: "check-circle-fill" };
 const passwordIcon = { type: "antdesign", name: "eye" };
 const backIcon = { type: IONICON, name: "arrow-back-circle-sharp" };
-const editIcon = { type: "ant-design", name: "edit" };
+const editIcon = { type: ENTYPO, name: "edit" };
 const addressIcon = { type: FONTISTO, name: "map-marker-alt" };
 const userIcon = { type: FONT_AWESOME_5, name: "user-alt" };
 

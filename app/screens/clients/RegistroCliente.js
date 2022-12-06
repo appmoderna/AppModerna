@@ -92,9 +92,9 @@ export default function RegistroCliente({ route, navigation }) {
   };
 
   const register = async () => {
-    if (validate()) {
-      return;
-    }
+    // if (validate()) {
+    //   return;
+    // }
     const cliente = {
       nombre: nombre,
       apellido: nombre,
@@ -105,7 +105,7 @@ export default function RegistroCliente({ route, navigation }) {
     console.log(cliente);
     await registerClient(cliente);
     Alert.alert("Registrado", "El usuario " + nombre + " ha sido registrado");
-    navigation.navigate("ClientesList", { update: true });
+    navigation.navigate("AgregarPedido", { cliente });
   };
   return (
     <ScrollView style={styles.container}>
@@ -155,7 +155,7 @@ export default function RegistroCliente({ route, navigation }) {
         <StyledInput
           max_length={10}
           numeric
-          label="                                              "
+          label="Teléfono"
           placeholder="Ingrese número de teléfono"
           value={telefono}
           onChangeText={(e) => {

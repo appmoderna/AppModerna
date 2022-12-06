@@ -2,7 +2,7 @@ import { FAB } from "@rneui/base";
 import React, { useEffect, useState } from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import Icons from "../../components/Icons";
-import SearhInput from "../../components/SearhInput";
+import SearchInput from "../../components/SearchInput";
 import { searchClients } from "../../services/ClienteService";
 import StyledText from "../../components/StyledText";
 import ClienteCard from "./ClienteCard";
@@ -30,7 +30,7 @@ export default function ClientesList({ navigation, route }) {
         CLIENTES
       </StyledText>
       {(MINIMUN_ELEMENTS_FOR_SEARCH < clientes.length || search !== "") && (
-        <SearhInput
+        <SearchInput
           value={search}
           onChangeText={setSearch}
           label="Busqueda"
