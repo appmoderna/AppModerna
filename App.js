@@ -19,6 +19,7 @@ import {
 import Splash from "./app/screens/landing/Splash";
 import Login from "./app/screens/auth/Login";
 import Auth from "./app/screens/auth/Auth";
+import PedidosList from "./app/screens/orders/PedidosList";
 
 const StackClientes = createNativeStackNavigator();
 const TabsApp = createBottomTabNavigator();
@@ -59,7 +60,7 @@ export default function App() {
       }}
     >
       <NavigationContainer>
-        {true ? <AppTabNavigation /> : <Auth />}
+        {false ? <AppTabNavigation /> : <PedidosList />}
         <StatusBar />
       </NavigationContainer>
     </PaperProvider>
