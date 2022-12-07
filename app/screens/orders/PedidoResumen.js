@@ -6,13 +6,13 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import StyledText from "../../theme/StyledText";
 import { Card, Title, Paragraph, List } from "react-native-paper";
 import { ListItem, Avatar, Button, Icon } from "@rneui/base";
 import theme from "../../theme/theme";
 import { useState } from "react";
 import { calcularFactura, traerproductos } from "../../services/ProductoItem";
 import PedidoCard from "./PedidoCard";
+import StyledText from "../../components/StyledText";
 
 export default function PedidoResumen() {
   const [factura, setFactura] = useState();

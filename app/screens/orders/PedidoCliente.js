@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import StyledInput from "../../components/StyledInput";
 import theme from "../../theme/theme";
-import StyledText from "../../theme/StyledText";
 import SearhInput from "../../components/SearchInput";
 import { Button, Icon } from "@rneui/base";
 import { useEffect, useRef, useState } from "react";
@@ -19,6 +18,7 @@ import { emailValidation } from "../../commons/validation";
 import DropDownPicker from "react-native-dropdown-picker";
 import Header from "../../components/Header";
 import ClienteCabecera from "../../components/ClienteCabecera";
+import StyledText from "../../components/StyledText";
 // https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/advanced/icons
 
 export default function PedidoCliente({ navigation, route }) {

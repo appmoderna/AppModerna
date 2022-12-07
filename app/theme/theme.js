@@ -20,6 +20,7 @@ const theme = {
     title: 20,
     subtitle: 17,
     small: 12.5,
+    smaller: 11,
   },
   fonts: {
     main: "System",

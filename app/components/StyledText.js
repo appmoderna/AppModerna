@@ -8,6 +8,9 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.main,
     fontWeight: theme.fontWeight.normal,
   },
+  smaller: {
+    fontSize: theme.fontSize.smaller,
+  },
   small: {
     fontSize: theme.fontSize.small,
   },
@@ -55,6 +58,7 @@ const StyledText = ({
   light,
   softbold,
   small,
+  smaller,
   title,
   subtitle,
   heading,
@@ -81,6 +85,7 @@ const StyledText = ({
     center && styles.center,
     modernaPrimary && styles.modernaPrimary,
     modernaSecondary && styles.modernaSecondary,
+    smaller && styles.smaller,
     color && { color: color },
     style,
   ];

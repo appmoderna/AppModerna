@@ -22,8 +22,15 @@ import Auth from "./app/screens/auth/Auth";
 import PedidosList from "./app/screens/orders/PedidosList";
 import PedidoCliente from "./app/screens/orders/PedidoCliente";
 import PedidoResumen from "./app/screens/orders/PedidoResumen";
+import TabBar from "./app/components/TabBar";
+import DescargarDiario from "./app/screens/landing/DescargarDiario";
+import SincronizarCliente from "./app/screens/clients/SincronizarCliente";
+import SincronizarPedidos from "./app/screens/clients/SincronizarPedidos";
+import Descargar from "./app/screens/clients/Descargar";
 
 const StackClientes = createNativeStackNavigator();
+const StackPedidos = createNativeStackNavigator();
+
 const TabsApp = createBottomTabNavigator();
 const paperTheme = {
   ...DefaultTheme,
@@ -62,7 +69,7 @@ export default function App() {
       }}
     >
       <NavigationContainer>
-        {true ? <PedidoResumen /> : <Login />}
+        {true ? <AppTabNavigation /> : <Login />}
         <StatusBar />
       </NavigationContainer>
     </PaperProvider>
@@ -72,24 +79,28 @@ export default function App() {
 const AppTabNavigation = () => {
   return (
     <TabsApp.Navigator
+      initialRouteName="ClientesStack"
+      // tabBar={() => <TabBar />}
       screenOptions={{
         header: () => <Header />,
         tabBarShowLabel: false,
         tabBarStyle: { backgroundColor: theme.colors.modernaRed },
       }}
     >
+      {/* _________________________________________________________________________________________ */}
+      {/* <TabsApp.Screen
+        name="DescargarDiarioStack"
+        component={DescargarDiario}
+        options={{
+          tabBarIcon: () => <Icons edit color={theme.colors.white} />,
+        }}
+      /> */}
+      {/* _________________________________________________________________________________________ */}
       <TabsApp.Screen
         name="ClientesStack"
         component={ClientesStackNavigation}
         options={{
-          tabBarIcon: () => (
-            <Icon
-              name="users"
-              type="font-awesome"
-              edit
-              color={theme.colors.white}
-            />
-          ),
+          tabBarIcon: () => <Icons edit color={theme.colors.white} />,
         }}
       />
       <TabsApp.Screen
@@ -98,8 +109,8 @@ const AppTabNavigation = () => {
         options={{
           tabBarIcon: () => (
             <Icon
-              name="cloud-offline"
-              type="ionicon"
+              name="supervised-user-circle"
+              type="MaterialIcons"
               edit
               color={theme.colors.white}
             />
@@ -110,40 +121,40 @@ const AppTabNavigation = () => {
         name="ClientesStack3"
         component={ClientesStackNavigation}
         options={{
-          tabBarIcon: () => (
-            <Icon
-              name="users"
-              type="font-awesome"
-              edit
-              color={theme.colors.white}
-            />
-          ),
+          tabBarIcon: () => <Icons sync color={theme.colors.white} />,
         }}
       />
       <TabsApp.Screen
-        name="ClientesStack4"
-        component={ClientesStackNavigation}
+        name="PedidosStackNavigation"
+        component={PedidosStackNavigation}
         options={{
-          tabBarIcon: () => (
-            <Icon
-              name="users"
-              type="font-awesome"
-              edit
-              color={theme.colors.white}
-            />
-          ),
+          tabBarIcon: () => <Icons list color={theme.colors.white} />,
         }}
       />
     </TabsApp.Navigator>
   );
 };
-
+const PedidosStackNavigation = () => {
+  return (
+    <StackPedidos.Navigator
+      initialRouteName="PedidosList"
+      screenOptions={{ headerShown: false }}
+    >
+      <StackPedidos.Screen name="PedidosList" component={PedidosList} />
+      <StackPedidos.Screen name="PedidoResumen" component={PedidoResumen} />
+    </StackPedidos.Navigator>
+  );
+};
 const ClientesStackNavigation = () => {
   return (
     <StackClientes.Navigator
       initialRouteName="ClientesList"
       screenOptions={{ headerShown: false }}
     >
+      <StackClientes.Screen
+        name="DescargarDiarioStack"
+        component={DescargarDiario}
+      />
       <StackClientes.Screen name="ClientesList" component={ClientesList} />
       <StackClientes.Screen
         name="RegistroCliente"
@@ -152,5 +163,41 @@ const ClientesStackNavigation = () => {
       <StackClientes.Screen name="AgregarPedido" component={PedidoCliente} />
       <StackClientes.Screen name="PedidoResumen" component={PedidoResumen} />
     </StackClientes.Navigator>
+  );
+};
+
+const SincronizacionNavigation = () => {
+  return (
+    <TabsApp.Navigator
+      initialRouteName="ClientesStack"
+      // tabBar={() => <TabBar />}
+      screenOptions={{
+        header: () => <Header />,
+        tabBarShowLabel: false,
+        tabBarStyle: { backgroundColor: theme.colors.modernaRed },
+      }}
+    >
+      <TabsApp.Screen
+        name="SincronizarClienteTab"
+        component={SincronizarCliente}
+        options={{
+          tabBarIcon: () => <Icons sync color={theme.colors.white} />,
+        }}
+      />
+      <TabsApp.Screen
+        name="SincronizarClienteTab"
+        component={SincronizarPedidos}
+        options={{
+          tabBarIcon: () => <Icons sync color={theme.colors.white} />,
+        }}
+      />
+      <TabsApp.Screen
+        name="DescargarTab"
+        component={Descargar}
+        options={{
+          tabBarIcon: () => <Icons sync color={theme.colors.white} />,
+        }}
+      />
+    </TabsApp.Navigator>
   );
 };
