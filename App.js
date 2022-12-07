@@ -22,6 +22,7 @@ import Auth from "./app/screens/auth/Auth";
 import PedidosList from "./app/screens/orders/PedidosList";
 import PedidoCliente from "./app/screens/orders/PedidoCliente";
 import PedidoResumen from "./app/screens/orders/PedidoResumen";
+import { BackHandler } from "react-native";
 
 const StackClientes = createNativeStackNavigator();
 const TabsApp = createBottomTabNavigator();
@@ -73,6 +74,7 @@ export default function App() {
 const AppTabNavigation = () => {
   return (
     <TabsApp.Navigator
+      initialRouteName="ClientesStack4"
       screenOptions={{
         header: () => <Header />,
         tabBarShowLabel: false,
@@ -109,8 +111,9 @@ const AppTabNavigation = () => {
       />
       <TabsApp.Screen
         name="ClientesStack3"
-        component={ClientesStackNavigation}
+        component={PedidoResumen}
         options={{
+          headerShown: false,
           tabBarIcon: () => (
             <Icon
               name="users"
@@ -123,7 +126,7 @@ const AppTabNavigation = () => {
       />
       <TabsApp.Screen
         name="ClientesStack4"
-        component={ClientesStackNavigation}
+        component={PedidoCliente}
         options={{
           tabBarIcon: () => (
             <Icon
@@ -151,7 +154,15 @@ const ClientesStackNavigation = () => {
         component={RegistroCliente}
       />
       <StackClientes.Screen name="AgregarPedido" component={PedidoCliente} />
-      <StackClientes.Screen name="PedidoResumen" component={PedidoResumen} />
+      <StackClientes.Screen
+        options={{
+          headerBackButtonMenuEnabled: true,
+          headerShown: true,
+          headerBackTitleVisible: true,
+        }}
+        name="PedidoResumen"
+        component={PedidoResumen}
+      />
     </StackClientes.Navigator>
   );
 };

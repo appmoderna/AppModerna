@@ -2,116 +2,106 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   FlatList,
-  ScrollView,
+  TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import StyledText from "../../theme/StyledText";
-import { Card, Title, Paragraph, List } from "react-native-paper";
-import { ListItem, Avatar, Button, Icon } from "@rneui/base";
+import { Button, FAB } from "@rneui/base";
 import theme from "../../theme/theme";
 import { useEffect, useState } from "react";
-import { calcularFactura, traerproductos } from "../../services/ProductoItem";
 import PedidoCard from "./PedidoCard";
+import {
+  getPedido,
+  calcularFactura,
+  removeDetalle,
+} from "../../services/PedidoService";
+import Icons from "../../components/Icons";
+import StyledButton from "../../components/StyledButton";
+import Header from "../../components/Header";
+import { to2Decimals } from "../../commons/validations";
 
-export default function PedidoResumen() {
+export default function PedidoResumen({ route, navigation }) {
   const [factura, setFactura] = useState();
   const [carrito, setCarrito] = useState([]);
-  const [currentDate, setCurrentDate] = useState('');
-  useEffect(() => {
-    var date = new Date().getDate(); //Current Date
-    var month = new Date().getMonth() + 1; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-  
-    setCurrentDate(
-      date + '/' + month + '/' + year 
-    );
-  }, []);
+  const date = new Date();
+  const currentDate =
+    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
-
-  const cargarCarrito = () => {
-    setCarrito(traerproductos());
+  const actualizarCarrito = () => {
+    const response = getPedido();
+    setCarrito(response);
     setFactura(calcularFactura());
   };
 
-  useState(() => {
-    cargarCarrito();
+  useEffect(() => {
+    actualizarCarrito();
   }, []);
+
+  const eliminarProductoRefresh = (id) => {
+    removeDetalle(id);
+    actualizarCarrito();
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.cajaCabecera}>
-        <StyledText heading>RESUMEN DE PEDIDO</StyledText>
-        <Text>{currentDate}</Text>
-      </View>
-      <View style={styles.cajaCuerpo}>
-        {/* ______________________________________________________________________________________________ */}
-        <Text
-          style={{
-            color: theme.colors.modernaRed,
-            fontWeight: "bold",
-            fontSize: 25,
-          }}
-        >
-          $ {factura?.subtotal + factura?.iva}
-        </Text>
-        <View style={styles.cajaTitulo}>
-          <Text style={{ color: "#ffff" }}>Resumen: </Text>
-        </View>
-        {/* ______________________________________________________________________________________________ */}
-        <View style={styles.cajaFinal}>
-
-          <View style={{ flexDirection: 'row', /*backgroundColor: 'green'*/ }}>
-            <View style={{/*backgroundColor:'green',*/justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-              <Text style={{fontWeight:'bold'}}>Subtotal:</Text>
-              <Text style={{fontWeight:'bold'}}>IVA :</Text>
-              <Text style={{fontWeight:'bold'}}>Total :</Text>
+      <Header back={() => navigation?.goBack()} />
+      <View style={styles.subcontainer}>
+        <StyledText heading bold center>
+          RESUMEN DE PEDIDO
+        </StyledText>
+        <StyledText light center>
+          {currentDate}
+        </StyledText>
+        <View style={styles.cajaCuerpo}>
+          <StyledText heading modernaPrimary bold>
+            $ {factura?.subtotal + factura?.iva}
+          </StyledText>
+          <Text style={[styles.cajaTitulo, { color: "#ffff" }]}>Resumen: </Text>
+          <View style={styles.cajaResumen}>
+            <View style={styles.resumen}>
+              <StyledText bold>Subtotal</StyledText>
+              <StyledText bold>$ {to2Decimals(factura?.subtotal)}</StyledText>
             </View>
-            <View style={{/*backgroundColor:'red',*/justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-              <Text>{factura?.subtotal}</Text>
-              <Text>{factura?.iva}</Text>
-              <Text>{factura?.subtotal + factura?.iva}</Text>
+            <View style={styles.resumen}>
+              <StyledText bold>IVA</StyledText>
+              <StyledText bold>$ {to2Decimals(factura?.iva)}</StyledText>
+            </View>
+            <View style={styles.resumen}>
+              <StyledText bold>Total</StyledText>
+              <StyledText bold>
+                $ {to2Decimals(factura?.subtotal + factura?.iva)}
+              </StyledText>
             </View>
           </View>
-        </View>
-        {/* ______________________________________________________________________________________________ */}
-        <View style={styles.cajaTitulo}>
-          <Text style={{ color: "#ffff" }}>Lista Productos: </Text>
-        </View>
-
-        {/* ______________________________________________________________________________________________ */}
-
-        <FlatList
-          data={carrito}
-          renderItem={({ item }) => {
-            return <PedidoCard producto={item} />;
-          }}
-          keyExtractor={(item) => {
-            return item.producto;
-          }}
-          
-        />
-        <View style={styles.cajaBotones}>
-          <Button
-            title=" Cancelar Pedido "
-            buttonStyle={{
-              borderRadius: 5,
-              marginHorizontal: 10,
-              backgroundColor: theme.colors.modernaRed,
+          <StyledText>{pe}</StyledText>
+          <Text style={[styles.cajaTitulo, { color: "#ffff" }]}>
+            Lista Productos:{" "}
+          </Text>
+          <FlatList
+            data={carrito}
+            renderItem={({ item, index }) => {
+              return (
+                <PedidoCard
+                  producto={item}
+                  eliminar={eliminarProductoRefresh}
+                  id={index}
+                />
+              );
             }}
-            size="lg"
-          />
-
-          <Button
-            title="Guardar"
-            buttonStyle={{
-              width: 180,
-              borderRadius: 5,
-              marginHorizontal: 10,
-              backgroundColor: theme.colors.modernaYellow,
+            keyExtractor={(item, index) => {
+              return index;
             }}
-            size="lg"
           />
+          <View style={styles.cajaBotones}>
+            <StyledButton
+              title="Cancelar Pedido"
+              big
+              secondary
+              style={{ width: 180 }}
+            />
+            <StyledButton title="Guardar" big primary style={{ width: 180 }} />
+          </View>
         </View>
       </View>
     </View>
@@ -121,24 +111,21 @@ export default function PedidoResumen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    //alignItems: 'center',
-    justifyContent: "center",
   },
-  cajaCabecera: {
-    //marginBottom:25,
-   // flex: 2,
-    // backgroundColor: 'cyan',
-    alignItems: "center",
-    //justifyContent: "flex-end",
-   // paddingBottom: 25,
+  subcontainer: {
+    backgroundColor: "#fff",
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 10,
+  },
+  cajaResumen: {
+    marginVertical: 10,
   },
   cajaCuerpo: {
     flex: 6,
     // backgroundColor: 'red',
     //alignItems: 'center',
     justifyContent: "center",
-    paddingHorizontal: 20,
   },
   itemProducto: {
     borderWidth: 1,
@@ -147,9 +134,8 @@ const styles = StyleSheet.create({
   cajaBotones: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 80,
-    paddingBottom: 45,
+    justifyContent: "space-between",
+    paddingVertical: 20,
   },
   cajaFinal: {
     justifyContent: "center",
@@ -163,5 +149,11 @@ const styles = StyleSheet.create({
     height: 25,
     justifyContent: "center",
     paddingLeft: 10,
+  },
+  resumen: {
+    flexDirection: "row",
+    paddingHorizontal: 30,
+    justifyContent: "space-between",
+    marginVertical: 1,
   },
 });

@@ -12,7 +12,7 @@ const config = {
   redirectUrl: AD_config.ANDROID_REDIRECT_URI,
   scopes: AD_config.SCOPE_ARRAY,
 };
-prefetchConfiguration(config);
+//prefetchConfiguration(config);
 
 export default function Auth() {
   const [session, setSession] = useState("");

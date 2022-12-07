@@ -19,71 +19,70 @@ import { emailValidation } from "../../commons/validation";
 import DropDownPicker from "react-native-dropdown-picker";
 import Header from "../../components/Header";
 import ClienteCabecera from "../../components/ClienteCabecera";
+import { consultarProductos, getProductoById } from "../../services/ProductoService";
+import { addDetallePedido } from "../../services/PedidoService";
 // https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/advanced/icons
 
 export default function PedidoCliente({ navigation, route }) {
   const cliente = route?.params?.cliente;
-  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+  const [idProductoSeleccionado, setIdProductoSeleccionado] = useState();
+  const [productoSeleccionado, setProductoSeleccionado] = useState()
   // const [busqueda, setBusqueda] = useState();
-  const [producto, setProducto] = useState("");
   const [errorbusqueda, setErrorbusqueda] = useState("")
   const [error, setError] = useState(false);
+
   const [cantidadproducto, setCantidadProducto] = useState(0);
   const [errorCantidadProducto, setErrorCantidadProducto] = useState("");
-  const [preciototal, setPrecioTotal] = useState("");
-  //let hasErrors=false;
-  const [errorproducto, setErrorProducto] = useState("");
-  const [productoslist, setProductosList] = useState([]);
-  // Prueba de dropdown
+
+  const [productoLista, setProductoLista] = useState()
+
+  const obtenerProductos= ()=>{
+    const response = consultarProductos(null)
+    let lista=[]
+    if(response){
+      response.forEach((elemento)=>{
+        lista.push({label:elemento.descripcion,value:elemento.idSap})
+      })
+    }
+    console.log(lista)
+    setProductoLista(lista)
+  }
+  useState(()=>{
+    obtenerProductos()
+  },[] )
+
+  const cargarInformacion= ()=>{
+    const response= getProductoById(idProductoSeleccionado)
+    setProductoSeleccionado(response)
+  }
+
 
   const [open, setOpen] = useState(false);
-  const [items, setItems] = useState([
-    { producto: "Apple", value: "apple" },
-    { producto: "Banana", value: "banana" },
-  ]);
-
-
-  const validate = () => {
-    if (cantidadproducto=="" || cantidadproducto==null) {
-      setError(true);
+  // const validate = () => {
+  //   if (cantidadproducto=="" || cantidadproducto==null) {
+  //     setError(true);
       
-      setErrorCantidadProducto("Ingrese un cantidad")
-      return true;
-    }   
+  //     setErrorCantidadProducto("Ingrese un cantidad")
+  //     return true;
+  //   }   
 
-    if(productoSeleccionado==null){
-      setErrorbusqueda("Escoja un producto");
-      return true;
-    }
+  //   if(productoSeleccionado==null){
+  //     setErrorbusqueda("Escoja un producto");
+  //     return true;
+  //   }
     
-    return false;
-  };
+  //   return false;
+  // };
 
   //-----------------------
   const agregar = () => {
     // if(validate()){
     //   return;
     // }
-    agregarproducto({
-      producto: productoSeleccionado,
-      cantidad: cantidadproducto,
-    });
+    addDetallePedido(productoSeleccionado,cantidadproducto)
+    setIdProductoSeleccionado(null)
     navigation?.navigate("PedidoResumen");
   };
-
- 
-  useEffect(() => {
-    console.log("producto seleccionado: " + productoSeleccionado);
-  }, [productoSeleccionado]);
-
-
-  const [productos, setProductos] = useState([
-    {label: "Pan",value: { nombre: "Pan", precio: 0.5, stock: 120 }},
-    {label: "Harina",value: { nombre: "Harina", precio: 1.5, stock: 20 }},
-    {label: "Harina Premium",value: { nombre: "Harina Premium", precio: 0.5, stock: 10 }},
-    {label: "Pan Integral",value: { nombre: "Pan Integral", precio: 2.5, stock: 12 }},
-    {label: "Pacari",value: { nombre: "Pacari", precio: 2, stock: 25 }}
-  ]);
 
   return (
     
@@ -94,16 +93,14 @@ export default function PedidoCliente({ navigation, route }) {
       <ClienteCabecera cliente={cliente} />
       <DropDownPicker
         open={open}
-        value={productoSeleccionado}
-        items={productos}
+        value={idProductoSeleccionado}
+        items={productoLista}
         setOpen={setOpen}
-        setValue={setProductoSeleccionado}
-        setItems={setProductos}
+        setValue={setIdProductoSeleccionado}
+        setItems={setProductoLista}
         searchable={true}
-        key={(item) => {
-          return item;
-        }}
         placeholder=" Busqueda"
+        onChangeValue={cargarInformacion}
         searchPlaceholder="Busque un producto"
         //style={{width:Dimensions.get("window").width - 80}}
         containerStyle={{
@@ -125,7 +122,7 @@ export default function PedidoCliente({ navigation, route }) {
           <StyledInput
             noeditable
             label="Producto"
-            value={productoSeleccionado?.nombre}
+            value={productoSeleccionado?.descripcion}
             placeholder="Ingresa el producto"
             style={styles.input}
           />
@@ -153,7 +150,7 @@ export default function PedidoCliente({ navigation, route }) {
             noeditable
             label="Precio Unitario"
             value={
-              productoSeleccionado?.precio && "" + productoSeleccionado?.precio
+              productoSeleccionado?.precioVenta && "" + productoSeleccionado?.precioVenta
             }
             placeholder="Ingresa el precio"
             style={styles.input}
@@ -164,11 +161,10 @@ export default function PedidoCliente({ navigation, route }) {
             label="Precio Total"
             value={
               productoSeleccionado && cantidadproducto
-                ? "" + cantidadproducto * productoSeleccionado?.precio
+                ? "" + cantidadproducto * productoSeleccionado?.precioVenta
                 : ""
             }
             placeholder="Total"
-            onChangeText={setPrecioTotal}
             style={styles.input}
           />
         </View>

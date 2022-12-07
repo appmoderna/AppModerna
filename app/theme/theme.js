@@ -15,7 +15,7 @@ const theme = {
   },
   fontSize: {
     body: 14,
-    heading: 24,
+    heading: 25,
     subheading: 22,
     title: 20,
     subtitle: 17,

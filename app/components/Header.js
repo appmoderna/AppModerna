@@ -1,9 +1,10 @@
 import { Image } from "@rneui/base";
 import { useEffect, useState } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, TouchableOpacity } from "react-native";
 import { Keyboard, View, StyleSheet } from "react-native";
 import theme from "../theme/theme";
 import Constants from "expo-constants";
+import Icons from "./Icons";
 
 export default function Header({ back, navigation, scale = 1, hide = true }) {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
@@ -29,6 +30,18 @@ export default function Header({ back, navigation, scale = 1, hide = true }) {
 
   return (
     <View style={styles.statusbar}>
+      {back && (
+        <View style={styles.back}>
+          <TouchableOpacity onPress={back}>
+            <Icons
+              color={theme.colors.modernaYellow}
+              style={styles.button}
+              size={40}
+              back
+            />
+          </TouchableOpacity>
+        </View>
+      )}
       <View style={isKeyboardVisible && hide ? styles.hide : styles.container}>
         <Image
           style={[
@@ -63,5 +76,11 @@ const styles = StyleSheet.create({
   logo: {
     marginVertical: 20,
     resizeMode: "center",
+  },
+  back: {
+    position: "absolute",
+    left: 10,
+    top: 10,
+    zIndex: 99,
   },
 });
