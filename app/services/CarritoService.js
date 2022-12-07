@@ -3,37 +3,36 @@ import { getClients } from "./ClienteService";
 import { consultarProductos, getProductoById } from "./ProductoService";
 
 const VALOR_IVA = 12;
-const test = getProductoById(1);
-const test2 = getProductoById(2);
+const productos = consultarProductos();
 const clientes = getClients();
 
 const carrito = [
   {
-    producto: test,
+    producto: productos[0],
     cantidad: 20,
-    precioUnitario: test.precioVenta,
-    subtotal: test.precioVenta * 20,
-    iva: (test.precioVenta * 20 * VALOR_IVA) / 100,
+    precioUnitario: productos[0].precioVenta,
+    subtotal: productos[0].precioVenta * 20,
+    iva: (productos[0].precioVenta * 20 * VALOR_IVA) / 100,
   },
   {
     idPedido: generateUIDD(),
     idCliente: clientes[1],
     idVendedor: "Santiago Mosquera",
-    producto: test2,
+    producto: productos[1],
     cantidad: 10,
-    precioUnitario: test2.precioVenta,
-    subtotal: test2.precioVenta * 10,
-    iva: (test2.precioVenta * 20 * VALOR_IVA) / 100,
+    precioUnitario: productos[1].precioVenta,
+    subtotal: productos[1].precioVenta * 10,
+    iva: (productos[1].precioVenta * 20 * VALOR_IVA) / 100,
   },
   {
     idPedido: generateUIDD(),
     idCliente: clientes[1],
     idVendedor: "Santiago Mosquera",
-    producto: test2,
+    producto: productos[1],
     cantidad: 10,
-    precioUnitario: test2.precioVenta,
-    subtotal: test2.precioVenta * 10,
-    iva: (test2.precioVenta * 20 * VALOR_IVA) / 100,
+    precioUnitario: productos[1].precioVenta,
+    subtotal: productos[1].precioVenta * 10,
+    iva: (productos[1].precioVenta * 20 * VALOR_IVA) / 100,
   },
 ];
 const detalleCarrito = {
@@ -44,6 +43,18 @@ const detalleCarrito = {
 };
 
 export const addDetallePedido = (producto, cantidad) => {
+  let exist = false;
+  carrito.forEach((item) => {
+    if (item.producto.idSap === producto.idSap) {
+      item.cantidad += parseInt(cantidad);
+      item.subtotal = item.cantidad * producto.precioVenta;
+      exist = true;
+      return;
+    }
+  });
+  if (exist) {
+    return;
+  }
   carrito.push({
     producto,
     cantidad,
@@ -70,5 +81,5 @@ export const calcularFacturaPedido = (pedido) => {
   return { iva, subtotal };
 };
 export const removeDetalle = (id) => {
-  return pedido.splice(id);
+  return carrito.splice(id);
 };

@@ -18,7 +18,7 @@ const stocks = [
   },
 ];
 
-const getStockById = (id) => {
+export const getStockById = (id) => {
   let stock;
   stocks.forEach((element) => {
     if (element.idProducto === id) {

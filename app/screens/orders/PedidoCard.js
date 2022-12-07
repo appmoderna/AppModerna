@@ -1,14 +1,5 @@
-import { ListItem } from "@rneui/base";
 import React, { useEffect, useState } from "react";
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { Avatar } from "react-native-paper";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import Icons from "../../components/Icons";
 import StyledText from "../../components/StyledText";
 
@@ -16,7 +7,6 @@ import theme from "../../theme/theme";
 
 export default function PedidoCard({ producto, showbuttons, eliminar, id }) {
   const [image, setImage] = useState(producto?.producto?.imagen);
-  const [numproductos, setNumproductos] = useState();
 
   useEffect(() => {
     console.log("producto: " + producto);
@@ -47,7 +37,7 @@ export default function PedidoCard({ producto, showbuttons, eliminar, id }) {
             ]}
             source={{ uri: image }}
           />
-          <View style={styles.data}>
+          <View style={[styles.data, styles.cantidad]}>
             <StyledText center bold>
               Cant.
             </StyledText>
@@ -81,7 +71,6 @@ export default function PedidoCard({ producto, showbuttons, eliminar, id }) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "gray",
     paddingBottom: 10,
     paddingHorizontal: 8,
     marginVertical: 1,
@@ -116,5 +105,8 @@ const styles = StyleSheet.create({
   iconwithtext: {
     flexDirection: "row",
     justifyContent: "flex-start",
+  },
+  cantidad: {
+    flex: 3,
   },
 });

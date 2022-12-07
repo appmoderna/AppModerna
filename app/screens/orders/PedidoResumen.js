@@ -1,37 +1,31 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import StyledText from "../../theme/StyledText";
 import { Button, FAB } from "@rneui/base";
 import theme from "../../theme/theme";
 import { useEffect, useState } from "react";
 import PedidoCard from "./PedidoCard";
-import {
-  getPedido,
-  calcularFactura,
-  removeDetalle,
-} from "../../services/PedidoService";
-import Icons from "../../components/Icons";
+
 import StyledButton from "../../components/StyledButton";
 import Header from "../../components/Header";
-import { to2Decimals } from "../../commons/validations";
+import { to2Decimals } from "../../commons/utils";
+import {
+  calcularFacturaPedido,
+  getPedidoActual,
+  removeDetalle,
+} from "../../services/CarritoService";
+
+const date = new Date();
+const currentDate =
+  date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
 export default function PedidoResumen({ route, navigation }) {
   const [factura, setFactura] = useState();
   const [carrito, setCarrito] = useState([]);
-  const date = new Date();
-  const currentDate =
-    date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
   const actualizarCarrito = () => {
-    const response = getPedido();
+    const response = getPedidoActual();
     setCarrito(response);
-    setFactura(calcularFactura());
+    setFactura(calcularFacturaPedido(response));
   };
 
   useEffect(() => {
@@ -74,10 +68,15 @@ export default function PedidoResumen({ route, navigation }) {
               </StyledText>
             </View>
           </View>
-          <StyledText>{pe}</StyledText>
+          <StyledText>ID</StyledText>
           <Text style={[styles.cajaTitulo, { color: "#ffff" }]}>
             Lista Productos:{" "}
           </Text>
+          {carrito?.length == 0 && (
+            <StyledText center bold style={{ marginTop: 20 }} title>
+              No tiene productos agregados
+            </StyledText>
+          )}
           <FlatList
             data={carrito}
             renderItem={({ item, index }) => {

@@ -76,7 +76,7 @@ const AppTabNavigation = () => {
     <TabsApp.Navigator
       initialRouteName="ClientesStack4"
       screenOptions={{
-        header: () => <Header />,
+        headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: { backgroundColor: theme.colors.modernaRed },
       }}
@@ -146,7 +146,7 @@ const ClientesStackNavigation = () => {
   return (
     <StackClientes.Navigator
       initialRouteName="ClientesList"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: true, header: () => <Header /> }}
     >
       <StackClientes.Screen name="ClientesList" component={ClientesList} />
       <StackClientes.Screen
@@ -155,11 +155,7 @@ const ClientesStackNavigation = () => {
       />
       <StackClientes.Screen name="AgregarPedido" component={PedidoCliente} />
       <StackClientes.Screen
-        options={{
-          headerBackButtonMenuEnabled: true,
-          headerShown: true,
-          headerBackTitleVisible: true,
-        }}
+        options={{ headerShown: false }}
         name="PedidoResumen"
         component={PedidoResumen}
       />
