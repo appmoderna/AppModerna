@@ -5,7 +5,7 @@ import StyledText from "../../components/StyledText";
 
 import theme from "../../theme/theme";
 
-export default function PedidoCard({ producto, showbuttons, eliminar, id }) {
+export default function PedidoCard({ producto, withbuttons, eliminar, id }) {
   const [image, setImage] = useState(producto?.producto?.imagen);
 
   useEffect(() => {
@@ -57,14 +57,16 @@ export default function PedidoCard({ producto, showbuttons, eliminar, id }) {
           </View>
         </View>
       </View>
-      <View style={styles.right}>
-        <TouchableOpacity>
-          <Icons edit color={theme.colors.modernaYellow} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => eliminar(id)}>
-          <Icons eliminar color={"red"} />
-        </TouchableOpacity>
-      </View>
+      {withbuttons === true && (
+        <View style={styles.right}>
+          <TouchableOpacity>
+            <Icons edit color={theme.colors.modernaYellow} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => eliminar(id)}>
+            <Icons eliminar color={"red"} />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }

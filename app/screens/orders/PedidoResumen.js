@@ -13,22 +13,30 @@ import {
   getPedidoActual,
   removeDetalle,
 } from "../../services/CarritoService";
+import ClienteCabecera from "../../components/ClienteCabecera";
 
 const date = new Date();
 const currentDate =
   date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
 export default function PedidoResumen({ route, navigation }) {
+  const pedido = route?.params?.pedido;
   const [factura, setFactura] = useState();
-  const [carrito, setCarrito] = useState([]);
+  const [carrito, setCarrito] = useState(pedido ? pedido.detallePedido : []);
 
   const actualizarCarrito = () => {
     const response = getPedidoActual();
     setCarrito(response);
-    setFactura(calcularFacturaPedido(response));
   };
 
   useEffect(() => {
+    setFactura(calcularFacturaPedido(carrito));
+  }, [carrito]);
+
+  useEffect(() => {
+    if (pedido) {
+      return;
+    }
     actualizarCarrito();
   }, []);
 
@@ -42,11 +50,25 @@ export default function PedidoResumen({ route, navigation }) {
       <Header back={() => navigation?.goBack()} />
       <View style={styles.subcontainer}>
         <StyledText heading bold center>
-          RESUMEN DE PEDIDO
+          {pedido && pedido?.textoFactura === ""
+            ? "REIMPRESION PEDIDO"
+            : "RESUMEN DE PEDIDO"}
         </StyledText>
         <StyledText light center>
-          {currentDate}
+          {`Fecha emisión: ${pedido ? pedido.fecha : currentDate}`}
         </StyledText>
+        {pedido && (
+          <View style={{ alignItems: "center" }}>
+            {pedido?.textoFactura !== "" && (
+              <StyledText style={{ marginTop: 5 }} bold modernaPrimary>
+                Pedido sin stock
+              </StyledText>
+            )}
+            <View style={{ marginTop: -10 }}>
+              <ClienteCabecera cliente={pedido.idCliente} />
+            </View>
+          </View>
+        )}
         <View style={styles.cajaCuerpo}>
           <StyledText heading modernaPrimary bold>
             $ {factura?.subtotal + factura?.iva}
@@ -84,6 +106,7 @@ export default function PedidoResumen({ route, navigation }) {
                 <PedidoCard
                   producto={item}
                   eliminar={eliminarProductoRefresh}
+                  withbuttons={pedido ? false : true}
                   id={index}
                 />
               );
@@ -92,15 +115,33 @@ export default function PedidoResumen({ route, navigation }) {
               return index;
             }}
           />
-          <View style={styles.cajaBotones}>
-            <StyledButton
-              title="Cancelar Pedido"
-              big
-              secondary
-              style={{ width: 180 }}
-            />
-            <StyledButton title="Guardar" big primary style={{ width: 180 }} />
-          </View>
+          {pedido ? (
+            pedido?.textoFactura === "" && (
+              <View style={styles.buttoncontainer}>
+                <StyledButton
+                  title="Reimprimir"
+                  big
+                  primary
+                  style={{ width: 180 }}
+                />
+              </View>
+            )
+          ) : (
+            <View style={styles.cajaBotones}>
+              <StyledButton
+                title="Cancelar Pedido"
+                big
+                secondary
+                style={{ width: 180 }}
+              />
+              <StyledButton
+                title="Guardar"
+                big
+                primary
+                style={{ width: 180 }}
+              />
+            </View>
+          )}
         </View>
       </View>
     </View>
@@ -154,5 +195,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     justifyContent: "space-between",
     marginVertical: 1,
+  },
+  buttoncontainer: {
+    alignItems: "center",
+    marginBottom: 20,
   },
 });

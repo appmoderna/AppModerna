@@ -1,24 +1,30 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import Icons from "../../components/Icons";
 import StyledText from "../../components/StyledText";
 import theme from "../../theme/theme";
 
-export default function PedidoShortCard({ pedido }) {
+export default function PedidoShortCard({ pedido, navigation }) {
   return (
-    <View style={[styles.card, pedido?.textoFactura !== "" && styles.nostock]}>
-      <View style={styles.left}>
-        <View style={styles.information}>
-          <StyledText bold>PEDIDO #{pedido?.idPedido}</StyledText>
-          <StyledText light>{pedido?.fecha}</StyledText>
+    <TouchableWithoutFeedback
+      onPress={() => navigation?.navigate("PedidoResumen", { pedido })}
+    >
+      <View
+        style={[styles.card, pedido?.textoFactura !== "" && styles.nostock]}
+      >
+        <View style={styles.left}>
+          <View style={styles.information}>
+            <StyledText bold>PEDIDO #{pedido?.idPedido}</StyledText>
+            <StyledText light>{pedido?.fecha}</StyledText>
+          </View>
+          <StyledText>{pedido?.idCliente?.nombre}</StyledText>
+          <StyledText light>{pedido?.idCliente?.identificacion}</StyledText>
         </View>
-        <StyledText>{pedido?.idCliente?.nombre}</StyledText>
-        <StyledText light>{pedido?.idCliente?.dni}</StyledText>
+        <View style={styles.right}>
+          <Icons check />
+        </View>
       </View>
-      <View style={styles.right}>
-        <Icons check />
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 const styles = StyleSheet.create({
@@ -30,10 +36,10 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginVertical: 3,
     flexDirection: "row",
-    borderTopWidth: 0.5,
+    borderTopWidth: 0.3,
     borderLeftWidth: 0.5,
-    borderBottomWidth: 2,
-    borderRightWidth: 2,
+    borderBottomWidth: 1.5,
+    borderRightWidth: 1.5,
     alignItems: "center",
   },
   left: {

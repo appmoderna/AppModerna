@@ -8,7 +8,7 @@ export default function ClienteCabecera({ cliente }) {
       <StyledText>
         {cliente ? cliente?.nombre : "Error, no se ha guardado el cliente"}
       </StyledText>
-      <StyledText light>{cliente?.dni}</StyledText>
+      <StyledText light>{cliente?.identificacion}</StyledText>
     </View>
   );
 }

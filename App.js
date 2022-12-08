@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import ResumenPedidos from "./app/screens/clients/ResumenPedidos";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { color, Icon } from "@rneui/base";
 import theme from "./app/theme/theme";
 import Icons from "./app/components/Icons";
@@ -25,6 +25,8 @@ import PedidoCliente from "./app/screens/orders/PedidoCliente";
 import PedidoResumen from "./app/screens/orders/PedidoResumen";
 import { BackHandler } from "react-native";
 import StyledText from "./app/components/StyledText";
+import DescargarDiario from "./app/screens/landing/DescargarDiario";
+import { SessionContext, SessionProvider } from "./app/context/SessionProvider";
 
 const StackClientes = createNativeStackNavigator();
 const StackPedidos = createNativeStackNavigator();
@@ -39,7 +41,7 @@ const paperTheme = {
 };
 
 export default function App() {
-  const [sessionUser, setSessionUser] = useState(false);
+  const { sessionUser, sincronizado } = useContext(SessionContext);
   const [appIsReady, setAppIsready] = useState(false);
 
   useEffect(() => {
@@ -68,7 +70,11 @@ export default function App() {
     >
       <NavigationContainer>
         {/* AppTabNavigation */}
-        {false ? <AppTabNavigation /> : <LoginStackNavigation />}
+        {(sessionUser !== null && sincronizado) || true ? (
+          <AppTabNavigation />
+        ) : (
+          <LoginStackNavigation />
+        )}
         <StatusBar />
       </NavigationContainer>
     </PaperProvider>
@@ -91,9 +97,9 @@ const AppTabNavigation = () => {
         options={{
           tabBarIcon: () => (
             <Icon
-              name="users"
-              type="font-awesome"
-              edit
+              name="cloud-offline"
+              type="ionicon"
+              size={30}
               color={theme.colors.white}
             />
           ),
@@ -105,9 +111,9 @@ const AppTabNavigation = () => {
         options={{
           tabBarIcon: () => (
             <Icon
-              name="cloud-offline"
-              type="ionicon"
-              edit
+              name="supervised-user-circle"
+              type="material"
+              size={30}
               color={theme.colors.white}
             />
           ),
@@ -118,14 +124,14 @@ const AppTabNavigation = () => {
         component={PedidoResumen}
         options={{
           headerShown: false,
-          tabBarIcon: () => <Icons sync color={theme.colors.white} />,
+          tabBarIcon: () => <Icons sync size={30} color={theme.colors.white} />,
         }}
       />
       <TabsApp.Screen
         name="PedidosStackNavigation"
         component={PedidosStackNavigation}
         options={{
-          tabBarIcon: () => <Icons list color={theme.colors.white} />,
+          tabBarIcon: () => <Icons list size={30} color={theme.colors.white} />,
         }}
       />
     </TabsApp.Navigator>
@@ -138,7 +144,7 @@ const LoginStackNavigation = () => {
       screenOptions={{ headerShown: false }}
     >
       <StackLogin.Screen name="Login" component={Login} />
-      <StackLogin.Screen name="IniciarDia" component={Login} />
+      <StackLogin.Screen name="DescargarDiario" component={DescargarDiario} />
     </StackLogin.Navigator>
   );
 };
@@ -169,7 +175,11 @@ const PedidosStackNavigation = () => {
       screenOptions={{ headerShown: true, header: () => <Header /> }}
     >
       <StackClientes.Screen name="PedidosList" component={PedidosList} />
-      <StackClientes.Screen name="PedidoResumen" component={PedidoResumen} />
+      <StackClientes.Screen
+        name="PedidoResumen"
+        options={{ headerShown: false }}
+        component={PedidoResumen}
+      />
     </StackClientes.Navigator>
   );
 };

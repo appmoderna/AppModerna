@@ -20,6 +20,7 @@ const addressIcon = { type: FONTISTO, name: "map-marker-alt" };
 const userIcon = { type: FONT_AWESOME_5, name: "user-alt" };
 const listIcon = { type: MATERIAL_COMUNITY, name: "clipboard-search-outline" };
 const syncIcon = { type: MATERIAL_COMUNITY, name: "cloud-refresh" };
+const squareIcon = { type: MATERIAL_COMUNITY, name: "cloud-refresh" };
 const Icons = ({
   address,
   eliminar,
@@ -34,6 +35,7 @@ const Icons = ({
   user,
   list,
   sync,
+  square,
 }) => {
   let icon = deleteIcon;
   if (eliminar) {
@@ -65,6 +67,9 @@ const Icons = ({
   }
   if (sync) {
     icon = syncIcon;
+  }
+  if (square) {
+    icon = squareIcon;
   }
   return (
     <Icon

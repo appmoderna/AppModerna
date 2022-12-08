@@ -44,7 +44,7 @@ export default function SearhInput({
         }}
         maxLength={max_length}
         autoCapitalize={mayus ? "characters" : "sentences"}
-        right={<TextInput.Icon icon="search" onPress={submitSearch} />}
+        right={<TextInput.Icon icon="search1" onPress={submitSearch} />}
       />
       <HelperText type="error" visible={errorMessage}>
         {errorMessage}

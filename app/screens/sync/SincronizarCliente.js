@@ -11,12 +11,12 @@ import { Searchbar } from "react-native-paper";
 
 const MINIMUN_ELEMENTS_FOR_SEARCH = 4;
 
-export default function ClientesList({ navigation, route }) {
+export default function SincronizarClientes({ navigation, route }) {
   const [clientes, setClientes] = useState([]);
   const [search, setSearch] = useState("");
 
   const buscarClientes = async () => {
-    const response = await searchClients(search);
+    const response = searchClients(search);
     setClientes(response);
   };
 

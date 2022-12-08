@@ -102,11 +102,20 @@ export const consultarPedidos = (criteria) => {
   let results = [];
   criteria = criteria.toLowerCase();
   pedidos.forEach((element) => {
+    let match = false;
     if (
-      element.idCliente.nombre.toLowerCase().includes(criteria) ||
-      element.producto.descripcion.toLowerCase().includes(criteria) ||
-      element.idCliente.identificacion.includes(criteria)
+      element?.idCliente?.nombre.toLowerCase().includes(criteria) ||
+      // element?.producto?.descripcion.toLowerCase().includes(criteria) ||
+      element?.idCliente?.identificacion.includes(criteria)
     ) {
+      match = true;
+    }
+    element.detallePedido.forEach((detalle) => {
+      if (detalle?.producto?.descripcion?.toLowerCase().includes(criteria)) {
+        match = true;
+      }
+    });
+    if (match) {
       results.push(element);
     }
   });

@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, color } from "@rneui/base";
 import theme from "../../theme/theme";
 import Header from "../../components/Header";
 import SplashDescarga from "./SplashDescarga";
 import Spinner from "react-native-loading-spinner-overlay";
+import { SessionContext } from "../../context/SessionProvider";
 
 export default function DescargarDiario({ navigation }) {
   const [estado, setEstado] = useState(false);
   //const [first, setfirst] = useState(second);
   const [appIsReady, setAppIsready] = useState(false);
-
+  const { setSincronizado } = useContext(SessionContext);
   useEffect(() => {
     if (estado == false) {
       return;
     }
     setTimeout(() => {
+      setSincronizado(true);
       setEstado(false);
     }, 1000);
   }, [estado]);
@@ -46,7 +48,6 @@ export default function DescargarDiario({ navigation }) {
         titleStyle={{ fontWeight: "700" }}
         onPress={() => {
           setEstado(true);
-          navigation.navigate("ClientesList");
         }}
       />
     </View>

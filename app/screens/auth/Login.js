@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import {
   removeRepliedCharacteresInEmail,
   validateEmail,
 } from "../../commons/validations";
+import { SessionContext } from "../../context/SessionProvider";
 
 export default function Login({ navigation }) {
   const [correo, setCorreo] = useState();
@@ -24,6 +25,8 @@ export default function Login({ navigation }) {
   const [passwordHidden, setPasswordHidden] = useState(true);
   const [errorCorreo, setErrorCorreo] = useState();
   const [errorPassword, setErrorPassword] = useState();
+  const { setSessionUser } = useContext(SessionContext);
+
   let hasErrors = false;
   const personaIngreso = () => {
     setErrorCorreo(null);
@@ -33,7 +36,8 @@ export default function Login({ navigation }) {
     if (hasErrors) {
       return;
     }
-    navigation.navigate("IniciarDia");
+    setSessionUser(correo);
+    navigation.navigate("DescargarDiario");
   };
 
   const validate = () => {

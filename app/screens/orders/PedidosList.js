@@ -3,7 +3,7 @@ import { Dimensions, FlatList, StyleSheet, View } from "react-native";
 import Icons from "../../components/Icons";
 import SearhInput from "../../components/SearchInput";
 import StyledText from "../../components/StyledText";
-import { getPedidos, searchPedidos } from "../../services/PedidosService";
+import { consultarPedidos } from "../../services/PedidoService";
 import theme from "../../theme/theme";
 import PedidoShortCard from "./PedidoShortCard";
 
@@ -11,11 +11,10 @@ export default function PedidosList({ navigation }) {
   const [pedidos, setPedidos] = useState([]);
   const [search, setSearch] = useState("");
 
-  const obtenerPedidos = async () => {
-    const response = await searchPedidos(search);
+  const obtenerPedidos = () => {
+    const response = consultarPedidos(search);
     setPedidos(response);
   };
-
   useEffect(() => {
     obtenerPedidos();
   }, [search]);
@@ -26,7 +25,7 @@ export default function PedidosList({ navigation }) {
         PEDIDOS
       </StyledText>
       <SearhInput
-        onSubmit={getPedidos}
+        onSubmit={obtenerPedidos}
         value={search}
         onChangeText={setSearch}
         style={styles.search}
@@ -35,12 +34,14 @@ export default function PedidosList({ navigation }) {
       />
       <View style={styles.information}>
         <View style={styles.infodetail}>
-          <Icons square size={32} />
+          <View style={styles.square} />
           <StyledText style={styles.message}>Pedido con stock</StyledText>
         </View>
         <View style={styles.information} />
         <View style={styles.infodetail}>
-          <Icons square size={32} color={theme.colors.modernaRed} />
+          <View
+            style={[styles.square, { borderColor: theme.colors.modernaRed }]}
+          />
           <StyledText style={styles.message} color={theme.colors.modernaRed}>
             Pedido sin stock
           </StyledText>
@@ -51,7 +52,13 @@ export default function PedidosList({ navigation }) {
         keyExtractor={(item) => item.id}
         data={pedidos}
         renderItem={({ item }) => {
-          return <PedidoShortCard pedido={item} navigation={navigation} />;
+          return (
+            <PedidoShortCard
+              pedido={item}
+              navigation={navigation}
+              withoutbuttons={true}
+            />
+          );
         }}
       />
     </View>
@@ -86,5 +93,12 @@ const styles = StyleSheet.create({
   message: { flex: 5, flexWrap: "wrap" },
   title: {
     marginBottom: 15,
+  },
+  square: {
+    width: 30,
+    height: 30,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    marginRight: 4,
   },
 });
