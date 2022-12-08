@@ -5,7 +5,7 @@ import Icons from "../../components/Icons";
 import SearchInput from "../../components/SearchInput";
 import { searchClients } from "../../services/ClienteService";
 import StyledText from "../../components/StyledText";
-import ClienteCard from "./ClienteCard";
+import {ClienteCard} from "../clients/ClienteCard"
 import theme from "../../theme/theme";
 import { Searchbar } from "react-native-paper";
 

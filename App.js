@@ -23,7 +23,7 @@ import Auth from "./app/screens/auth/Auth";
 import PedidosList from "./app/screens/orders/PedidosList";
 import PedidoCliente from "./app/screens/orders/PedidoCliente";
 import PedidoResumen from "./app/screens/orders/PedidoResumen";
-import { BackHandler } from "react-native";
+import { BackHandler, Image, TouchableOpacity, View } from "react-native";
 import StyledText from "./app/components/StyledText";
 import DescargarDiario from "./app/screens/landing/DescargarDiario";
 import { SessionContext, SessionProvider } from "./app/context/SessionProvider";
@@ -39,6 +39,35 @@ const paperTheme = {
     text: "orange",
   },
 };
+
+const CustomTabBarButton = () => {
+  return (
+    <TouchableOpacity
+      style={{
+        backgroundColor: 'white',
+        height: 70,
+        width: 70,
+        borderRadius: 50,
+        bottom: 35,
+        justifyContent: 'center',
+        alignItems: 'center'
+
+      }}
+      //activeOpacity={0.98}
+    >
+      <Icon
+        name='plus'
+        type="entypo"
+        color='white'
+        style={{ borderRadius: 50, backgroundColor: theme.colors.modernaYellow, padding: 15 }}
+        size={30}
+
+      />
+
+    </TouchableOpacity>
+  );
+}
+
 
 export default function App() {
   const { sessionUser, sincronizado } = useContext(SessionContext);
@@ -70,11 +99,13 @@ export default function App() {
     >
       <NavigationContainer>
         {/* AppTabNavigation */}
-        {(sessionUser !== null && sincronizado) || true ? (
-          <AppTabNavigation />
-        ) : (
-          <LoginStackNavigation />
-        )}
+        {(sessionUser !== null && sincronizado)
+
+          ? (
+            <AppTabNavigation />
+          ) : (
+            <LoginStackNavigation />
+          )}
         <StatusBar />
       </NavigationContainer>
     </PaperProvider>
@@ -88,8 +119,21 @@ const AppTabNavigation = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: { backgroundColor: theme.colors.modernaRed },
+        tabBarStyle: {
+          //position: 'absolute',
+          backgroundColor: theme.colors.modernaRed,
+          zIndex: 1,
+          elevation: 1,
+          //left: 5,
+          //right: 5,
+          height: 65,
+          //bottom: 21,
+          //borderRadius: 12
+          /*,position:'absolute'*/
+        },
+
       }}
+
     >
       <TabsApp.Screen
         name="ClientesStack"
@@ -117,6 +161,13 @@ const AppTabNavigation = () => {
               color={theme.colors.white}
             />
           ),
+        }}
+      />
+      <TabsApp.Screen
+        name="ButtonPlus"
+        component={ClientesStackNavigation}
+        options={{
+          tabBarButton: () => (<CustomTabBarButton />)
         }}
       />
       <TabsApp.Screen
