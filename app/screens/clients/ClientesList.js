@@ -46,6 +46,7 @@ export default function ClientesList({ navigation, route }) {
         </View>
       ) : (
         <FlatList
+          keyExtractor={(item) => item.dni}
           data={clientes}
           renderItem={({ item }) => {
             return <ClienteCard cliente={item} navigation={navigation} />;
@@ -57,6 +58,17 @@ export default function ClientesList({ navigation, route }) {
         placement="right"
         color={theme.colors.modernaYellow}
         onPress={() => navigation.navigate("RegistroCliente")}
+        style={{
+          backgroundColor: "black",
+          marginHorizontal: 150,
+          padding: 8,
+          borderRadius: 50,
+          position: "relative",
+          top: 25,
+          //display: "flex",
+          zIndex: 1,
+          //elevation: 1,
+        }}
       >
         +
       </FAB>

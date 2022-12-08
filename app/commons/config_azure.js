@@ -1,3 +1,5 @@
+import { authorize } from "react-native-app-auth";
+
 export const AD_config = {
   TENAN_ID: "660d74ab-52d0-4edd-b1b6-dfd40b692155",
   GRAND_TYPE: "DEFAULT",
@@ -44,10 +46,10 @@ export const msalIOSConfig = {
   ],
 };
 // Log in to get an authentication token
-const authState = async () => await authorize(config);
+export const authState = async () => await authorize(config);
 
 // Refresh token
-const refreshedState = async () =>
+export const refreshedState = async () =>
   await refresh(config, {
     refreshToken: authState.refreshToken,
   });

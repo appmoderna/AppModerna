@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, View } from "react-native";
+import Icons from "../../components/Icons";
 import SearhInput from "../../components/SearchInput";
 import StyledText from "../../components/StyledText";
-import { consultarPedidos } from "../../services/PedidoService";
+import { getPedidos, searchPedidos } from "../../services/PedidosService";
 import theme from "../../theme/theme";
 import PedidoShortCard from "./PedidoShortCard";
 
@@ -10,37 +11,44 @@ export default function PedidosList({ navigation }) {
   const [pedidos, setPedidos] = useState([]);
   const [search, setSearch] = useState("");
 
-  const obtenerPedidos = () => {
-    const response = consultarPedidos(search);
+  const obtenerPedidos = async () => {
+    const response = await searchPedidos(search);
     setPedidos(response);
   };
+
   useEffect(() => {
     obtenerPedidos();
   }, [search]);
 
   return (
     <View style={styles.container}>
-      <StyledText heading bold center>
+      <StyledText bold center heading style={styles.title}>
         PEDIDOS
       </StyledText>
       <SearhInput
+        onSubmit={getPedidos}
         value={search}
         onChangeText={setSearch}
-        onSubmit={obtenerPedidos}
+        style={styles.search}
+        placeholder="Buscar pedido"
         label="Buscar"
       />
-      <View style={styles.boxgroup}>
-        <View style={styles.boxcontainer}>
-          <View style={styles.box}></View>
-          <StyledText style={{ flexWrap: "wrap" }}>Pedido con stock</StyledText>
+      <View style={styles.information}>
+        <View style={styles.infodetail}>
+          <Icons square size={32} />
+          <StyledText style={styles.message}>Pedido con stock</StyledText>
         </View>
-        <View style={styles.boxcontainer}>
-          <View style={[styles.box, styles.nostock]}></View>
-          <StyledText modernaPrimary>Pedido con stock</StyledText>
+        <View style={styles.information} />
+        <View style={styles.infodetail}>
+          <Icons square size={32} color={theme.colors.modernaRed} />
+          <StyledText style={styles.message} color={theme.colors.modernaRed}>
+            Pedido sin stock
+          </StyledText>
         </View>
       </View>
       <FlatList
         style={styles.list}
+        keyExtractor={(item) => item.id}
         data={pedidos}
         renderItem={({ item }) => {
           return <PedidoShortCard pedido={item} navigation={navigation} />;
@@ -52,24 +60,31 @@ export default function PedidosList({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.white,
-    paddingHorizontal: 15,
+    backgroundColor: "#fff",
+    paddingHorizontal: 10,
   },
-  boxgroup: { flexDirection: "row" },
-  boxcontainer: {
+  list: {
+    marginTop: 0,
+    marginBottom: 50,
+    paddingHorizontal: 5,
+  },
+  search: {
+    marginBottom: 0,
+  },
+  information: {
     flexDirection: "row",
     alignItems: "center",
-    width: Dimensions.get("window").width / 3,
+    justifyContent: "space-evenly",
+    paddingHorizontal: 30,
+    marginBottom: 10,
   },
-  box: {
-    width: 50,
-    height: 50,
-    borderBottomWidth: 2,
-    borderRightWidth: 2,
-    borderLeftWidth: 0.5,
-    borderTopWidth: 0.5,
+  infodetail: {
+    flex: 3,
+    flexDirection: "row",
+    alignItems: "center",
   },
-  nostock: {
-    borderColor: theme.colors.modernaRed,
+  message: { flex: 5, flexWrap: "wrap" },
+  title: {
+    marginBottom: 15,
   },
 });
