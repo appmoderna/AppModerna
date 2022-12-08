@@ -12,9 +12,7 @@ export const AD_config = {
 
   SIGNATURE_HASH: "9DtNbHJctvXZStn4kYC3Bl5Uzio=",
   ISSUER:
-    "https://login.microsoftonline.com/" +
-    "660d74ab-52d0-4edd-b1b6-dfd40b692155" +
-    "/v2.0",
+    "https://login.microsoftonline.com/660d74ab-52d0-4edd-b1b6-dfd40b692155/oauth2/v2.0/authorize",
 };
 
 export const msalAndroidConfig = {
@@ -45,11 +43,3 @@ export const msalIOSConfig = {
     },
   ],
 };
-// Log in to get an authentication token
-export const authState = async () => await authorize(config);
-
-// Refresh token
-export const refreshedState = async () =>
-  await refresh(config, {
-    refreshToken: authState.refreshToken,
-  });

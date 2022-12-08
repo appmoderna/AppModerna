@@ -21,7 +21,12 @@ export default function PedidoShortCard({ pedido, navigation }) {
           <StyledText light>{pedido?.idCliente?.identificacion}</StyledText>
         </View>
         <View style={styles.right}>
-          <Icons check />
+          <Icons
+            check
+            color={
+              pedido?.sincronizado ? theme.colors.active : theme.colors.inactive
+            }
+          />
         </View>
       </View>
     </TouchableWithoutFeedback>

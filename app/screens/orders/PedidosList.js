@@ -97,8 +97,10 @@ const styles = StyleSheet.create({
   square: {
     width: 30,
     height: 30,
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
+    borderTopWidth:0.5,
+    borderLeftWidth:0.5,
     marginRight: 4,
   },
 });

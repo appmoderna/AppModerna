@@ -1,24 +1,23 @@
 import React, { useContext, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import theme from "../../theme/theme";
-import { Input, Button, Icon } from "@rneui/base";
+import { Button } from "@rneui/base";
 import StyledText from "../../components/StyledText";
 import StyledInput from "../../components/StyledInput";
 import Icons from "../../components/Icons";
 import Header from "../../components/Header";
-import {
-  removeRepliedCharacteresInEmail,
-  validateEmail,
-} from "../../commons/validations";
+import { validateEmail } from "../../commons/validations";
 import { SessionContext } from "../../context/SessionProvider";
-
+import StyledButton from "../../components/StyledButton";
+import { authorize } from "react-native-app-auth";
+import { AD_config } from "../../commons/config_azure";
+const config = {
+  warmAndPrefetchChrome: true,
+  issuer: AD_config.ISSUER,
+  clientId: AD_config.CLIENTE_ID,
+  redirectUrl: AD_config.ANDROID_REDIRECT_URI,
+  scopes: AD_config.SCOPE_ARRAY,
+};
 export default function Login({ navigation }) {
   const [correo, setCorreo] = useState();
   const [password, setPassword] = useState();
@@ -54,7 +53,14 @@ export default function Login({ navigation }) {
       hasErrors = true;
     }
   };
-
+  const login = async () => {
+    try {
+      const result = await authorize(config);
+      setSession(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View style={styles.container}>
       <Header
@@ -103,6 +109,7 @@ export default function Login({ navigation }) {
           onPress={personaIngreso}
         />
       </View>
+      <StyledButton onPress={login} title="Login with Chrome" />
     </View>
   );
 }

@@ -14,13 +14,14 @@ const deleteIcon = { type: FONTAWESOME, name: "trash" };
 const searchIcon = { type: FONTISTO, name: "search" };
 const checkIcon = { type: OCTICON, name: "check-circle-fill" };
 const passwordIcon = { type: ANTDESIGN, name: "eye" };
+const downloadIcon = { type: ANTDESIGN, name: "clouddownload" };
 const backIcon = { type: IONICON, name: "arrow-back-circle-sharp" };
 const editIcon = { type: ENTYPO, name: "edit" };
 const addressIcon = { type: FONTISTO, name: "map-marker-alt" };
 const userIcon = { type: FONT_AWESOME_5, name: "user-alt" };
 const listIcon = { type: MATERIAL_COMUNITY, name: "clipboard-search-outline" };
 const syncIcon = { type: MATERIAL_COMUNITY, name: "cloud-refresh" };
-const squareIcon = { type: MATERIAL_COMUNITY, name: "cloud-refresh" };
+const productIcon = { type: ANTDESIGN, name: "dropbox" };
 const Icons = ({
   address,
   eliminar,
@@ -35,7 +36,8 @@ const Icons = ({
   user,
   list,
   sync,
-  square,
+  download,
+  product,
 }) => {
   let icon = deleteIcon;
   if (eliminar) {
@@ -68,9 +70,10 @@ const Icons = ({
   if (sync) {
     icon = syncIcon;
   }
-  if (square) {
-    icon = squareIcon;
+  if (product) {
+    icon = productIcon;
   }
+  if (download) icon = downloadIcon;
   return (
     <Icon
       size={size ? size : 30}

@@ -4,7 +4,7 @@ const clientes = [
   {
     idCliente: generateUIDD(),
     nombre: "Santiago Mosquera",
-    identificacion: "1301231234",
+    identificacion: "1371231234",
     direccion: "Av. Amazonas y Naciones Unidad",
     telefono: "091234567",
     sincronizado: true,
@@ -20,7 +20,7 @@ const clientes = [
   {
     idCliente: generateUIDD(),
     nombre: "Armando Casas",
-    identificacion: "1301231234",
+    identificacion: "1331231234",
     direccion: "Av. Amazonas y Naciones Unidad",
     telefono: "091234567",
     sincronizado: false,
@@ -28,7 +28,7 @@ const clientes = [
   {
     idCliente: generateUIDD(),
     nombre: "Maria la del Barrio",
-    identificacion: "1301231234",
+    identificacion: "1345231234",
     direccion: "Av. Amazonas y Naciones Unidad",
     telefono: "091234567",
     sincronizado: false,

@@ -16,7 +16,7 @@ export default function ClientesList({ navigation, route }) {
   const [search, setSearch] = useState("");
 
   const buscarClientes = async () => {
-    const response = await searchClients(search);
+    const response = searchClients(search);
     setClientes(response);
   };
 
@@ -46,7 +46,7 @@ export default function ClientesList({ navigation, route }) {
         </View>
       ) : (
         <FlatList
-          keyExtractor={({ item }) => item?.identificacion}
+          keyExtractor={(item) => item.identificacion}
           data={clientes}
           renderItem={({ item }) => {
             return <ClienteCard cliente={item} navigation={navigation} />;
@@ -58,17 +58,6 @@ export default function ClientesList({ navigation, route }) {
         placement="right"
         color={theme.colors.modernaYellow}
         onPress={() => navigation.navigate("RegistroCliente")}
-        style={{
-          backgroundColor: "black",
-          marginHorizontal: 150,
-          padding: 8,
-          borderRadius: 50,
-          position: "relative",
-          top: 25,
-          //display: "flex",
-          zIndex: 1,
-          //elevation: 1,
-        }}
       >
         +
       </FAB>

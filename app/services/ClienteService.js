@@ -16,9 +16,8 @@ const searchClients = (criteria) => {
   criteria = criteria.toLowerCase();
   clientes.forEach((element) => {
     if (
-      element.nombre.toLowerCase().includes(criteria) ||
-      element.apellido.includes(criteria) ||
-      element.dni.includes(criteria)
+      element?.nombre.toLowerCase().includes(criteria) ||
+      element?.identificacion.includes(criteria)
     ) {
       results.push(element);
     }
@@ -26,4 +25,19 @@ const searchClients = (criteria) => {
   return results;
 };
 
-export { getClients, searchClients, deleteClient, registerClient };
+const getUnsincronizedClients = () => {
+  let results = [];
+  clientes.forEach((element) => {
+    if (element?.sincronizado === false) {
+      results.push(element);
+    }
+  });
+  return results;
+};
+export {
+  getClients,
+  searchClients,
+  getUnsincronizedClients,
+  deleteClient,
+  registerClient,
+};
