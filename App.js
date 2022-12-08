@@ -25,6 +25,8 @@ import PedidoResumen from "./app/screens/orders/PedidoResumen";
 import { BackHandler } from "react-native";
 
 const StackClientes = createNativeStackNavigator();
+const StackPedidos = createNativeStackNavigator();
+
 const TabsApp = createBottomTabNavigator();
 const paperTheme = {
   ...DefaultTheme,
@@ -114,28 +116,14 @@ const AppTabNavigation = () => {
         component={PedidoResumen}
         options={{
           headerShown: false,
-          tabBarIcon: () => (
-            <Icon
-              name="users"
-              type="font-awesome"
-              edit
-              color={theme.colors.white}
-            />
-          ),
+          tabBarIcon: () => <Icons sync color={theme.colors.white} />,
         }}
       />
       <TabsApp.Screen
-        name="ClientesStack4"
-        component={PedidoCliente}
+        name="PedidosStackNavigation"
+        component={PedidosStackNavigation}
         options={{
-          tabBarIcon: () => (
-            <Icon
-              name="users"
-              type="font-awesome"
-              edit
-              color={theme.colors.white}
-            />
-          ),
+          tabBarIcon: () => <Icons list color={theme.colors.white} />,
         }}
       />
     </TabsApp.Navigator>
@@ -159,6 +147,17 @@ const ClientesStackNavigation = () => {
         name="PedidoResumen"
         component={PedidoResumen}
       />
+    </StackClientes.Navigator>
+  );
+};
+const PedidosStackNavigation = () => {
+  return (
+    <StackClientes.Navigator
+      initialRouteName="PedidosList"
+      screenOptions={{ headerShown: true, header: () => <Header /> }}
+    >
+      <StackClientes.Screen name="PedidosList" component={PedidosList} />
+      <StackClientes.Screen name="PedidoResumen" component={PedidoResumen} />
     </StackClientes.Navigator>
   );
 };

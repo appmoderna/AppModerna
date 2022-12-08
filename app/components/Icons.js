@@ -2,20 +2,24 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Icon } from "@rneui/base";
 
+const FONTAWESOME = "font-awesome";
 const FONT_AWESOME_5 = "font-awesome-5";
 const FONTISTO = "fontisto";
 const IONICON = "ionicon";
 const ENTYPO = "entypo";
-const FONTAWESOME = "font-awesome";
+const OCTICON = "octicon";
+const ANTDESIGN = "antdesign";
+const MATERIAL_COMUNITY = "material-community";
 const deleteIcon = { type: FONTAWESOME, name: "trash" };
 const searchIcon = { type: FONTISTO, name: "search" };
-const checkIcon = { type: "octicon", name: "check-circle-fill" };
-const passwordIcon = { type: "antdesign", name: "eye" };
+const checkIcon = { type: OCTICON, name: "check-circle-fill" };
+const passwordIcon = { type: ANTDESIGN, name: "eye" };
 const backIcon = { type: IONICON, name: "arrow-back-circle-sharp" };
 const editIcon = { type: ENTYPO, name: "edit" };
 const addressIcon = { type: FONTISTO, name: "map-marker-alt" };
 const userIcon = { type: FONT_AWESOME_5, name: "user-alt" };
-
+const listIcon = { type: MATERIAL_COMUNITY, name: "clipboard-search-outline" };
+const syncIcon = { type: MATERIAL_COMUNITY, name: "cloud-refresh" };
 const Icons = ({
   address,
   eliminar,
@@ -28,6 +32,8 @@ const Icons = ({
   back,
   edit,
   user,
+  list,
+  sync,
 }) => {
   let icon = deleteIcon;
   if (eliminar) {
@@ -53,6 +59,12 @@ const Icons = ({
   }
   if (user) {
     icon = userIcon;
+  }
+  if (list) {
+    icon = listIcon;
+  }
+  if (sync) {
+    icon = syncIcon;
   }
   return (
     <Icon
