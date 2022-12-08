@@ -27,7 +27,7 @@ export default function ClienteCard({ cliente, navigation }) {
       <View style={styles.horizontal}>
         <View style={styles.information}>
           <StyledText light style={{ paddingLeft: 7 }}>
-            {cliente.dni}
+            {cliente.identificacion}
           </StyledText>
           <View style={styles.iconwithtext}>
             <Icons user size={18} style={{ paddingRight: 4 }} />

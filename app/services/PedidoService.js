@@ -12,6 +12,7 @@ const pedidos = [
     idCliente: clientes[1],
     idVendedor: "Santiago Mosquera",
     textoFactura: "",
+    fecha: "02/02/1992",
     detallePedido: [
       {
         producto: productos[0],
@@ -47,7 +48,7 @@ const pedidos = [
     idCliente: clientes[0],
     idVendedor: "Santiago Mosquera",
     textoFactura: "Pedido sin stock",
-
+    fecha: "02/02/1991",
     detallePedido: [
       {
         producto: productos[0],
@@ -87,24 +88,24 @@ const detallePedido = {
 };
 
 export const addDetallePedido = (producto, cantidad) => {
-  pedido.push({
+  pedidos.push({
     producto,
     cantidad,
     precioUnitario: producto.precioVenta,
     subtotal: producto.precioVenta * cantidad,
   });
 };
-export const consultarPedido = (criteria) => {
+export const consultarPedidos = (criteria) => {
   if (!criteria || criteria === "") {
-    return clientes;
+    return pedidos;
   }
   let results = [];
   criteria = criteria.toLowerCase();
-  const cliente = pedidos.forEach((element) => {
+  pedidos.forEach((element) => {
     if (
-      element.idCliente.toLowerCase().includes(criteria) ||
-      element.apellido.includes(criteria) ||
-      element.dni.includes(criteria)
+      element.idCliente.nombre.toLowerCase().includes(criteria) ||
+      element.producto.descripcion.toLowerCase().includes(criteria) ||
+      element.idCliente.identificacion.includes(criteria)
     ) {
       results.push(element);
     }
