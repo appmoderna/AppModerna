@@ -1,12 +1,10 @@
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
 import StyledInput from "../../components/StyledInput";
 import theme from "../../theme/theme";
-import StyledText from "../../theme/StyledText";
-import SearhInput from "../../components/SearchInput";
+import StyledText from "../../components/StyledText";
 import { Button, Icon } from "@rneui/base";
 import { useEffect, useRef, useState } from "react";
 import { HelperText, Searchbar } from "react-native-paper";
-import { emailValidation } from "../../commons/validation";
 import DropDownPicker from "react-native-dropdown-picker";
 import ClienteCabecera from "../../components/ClienteCabecera";
 import {

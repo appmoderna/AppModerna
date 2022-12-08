@@ -11,6 +11,7 @@ import { color, Icon } from "@rneui/base";
 import theme from "./app/theme/theme";
 import Icons from "./app/components/Icons";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 import {
   MD3Colors as DefaultTheme,
@@ -23,10 +24,11 @@ import PedidosList from "./app/screens/orders/PedidosList";
 import PedidoCliente from "./app/screens/orders/PedidoCliente";
 import PedidoResumen from "./app/screens/orders/PedidoResumen";
 import { BackHandler } from "react-native";
+import StyledText from "./app/components/StyledText";
 
 const StackClientes = createNativeStackNavigator();
 const StackPedidos = createNativeStackNavigator();
-
+const StackLogin = createNativeStackNavigator();
 const TabsApp = createBottomTabNavigator();
 const paperTheme = {
   ...DefaultTheme,
@@ -61,12 +63,12 @@ export default function App() {
   return (
     <PaperProvider
       settings={{
-        icon: (props) => <AwesomeIcon {...props} />,
+        icon: (props) => <AntDesign {...props} />,
       }}
     >
       <NavigationContainer>
         {/* AppTabNavigation */}
-        {true ? <AppTabNavigation /> : <Login />}
+        {false ? <AppTabNavigation /> : <LoginStackNavigation />}
         <StatusBar />
       </NavigationContainer>
     </PaperProvider>
@@ -129,7 +131,17 @@ const AppTabNavigation = () => {
     </TabsApp.Navigator>
   );
 };
-
+const LoginStackNavigation = () => {
+  return (
+    <StackLogin.Navigator
+      initialRouteName="Login"
+      screenOptions={{ headerShown: false }}
+    >
+      <StackLogin.Screen name="Login" component={Login} />
+      <StackLogin.Screen name="IniciarDia" component={Login} />
+    </StackLogin.Navigator>
+  );
+};
 const ClientesStackNavigation = () => {
   return (
     <StackClientes.Navigator

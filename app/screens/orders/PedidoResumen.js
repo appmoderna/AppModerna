@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import StyledText from "../../theme/StyledText";
 import { Button, FAB } from "@rneui/base";
 import theme from "../../theme/theme";
 import { useEffect, useState } from "react";
 import PedidoCard from "./PedidoCard";
+import StyledText from "../../components/StyledText";
 
 import StyledButton from "../../components/StyledButton";
 import Header from "../../components/Header";

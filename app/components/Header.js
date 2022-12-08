@@ -6,7 +6,13 @@ import theme from "../theme/theme";
 import Constants from "expo-constants";
 import Icons from "./Icons";
 
-export default function Header({ back, navigation, scale = 1, hide = true }) {
+export default function Header({
+  back,
+  navigation,
+  scale = 1,
+  hide = true,
+  style,
+}) {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -29,7 +35,7 @@ export default function Header({ back, navigation, scale = 1, hide = true }) {
   }, []);
 
   return (
-    <View style={styles.statusbar}>
+    <View style={[styles.statusbar]}>
       {back && (
         <View style={styles.back}>
           <TouchableOpacity onPress={back}>
@@ -42,7 +48,11 @@ export default function Header({ back, navigation, scale = 1, hide = true }) {
           </TouchableOpacity>
         </View>
       )}
-      <View style={isKeyboardVisible && hide ? styles.hide : styles.container}>
+      <View
+        style={
+          isKeyboardVisible && hide ? styles.hide : [styles.container, style]
+        }
+      >
         <Image
           style={[
             styles.logo,

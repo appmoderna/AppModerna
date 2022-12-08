@@ -1,7 +1,5 @@
-import { Input } from "@rneui/base";
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import StyledText from "./StyledText";
+import { Alert, StyleSheet, View } from "react-native";
 import theme from "../theme/theme";
 import Icons from "./Icons";
 import { HelperText, TextInput } from "react-native-paper";
@@ -25,6 +23,8 @@ export default function StyledInput({
   email,
   max_length = 80,
   noeditable,
+  onIconClick,
+  lowercase,
 }) {
   return (
     <View style={style}>
@@ -50,12 +50,22 @@ export default function StyledInput({
         }}
         maxLength={max_length}
         secureTextEntry={password}
-        autoCapitalize={mayus ? "characters" : "sentences"}
+        autoCapitalize={mayus ? "characters" : lowercase ? "none" : "sentences"}
         editable={noeditable ? false : true}
+        right={
+          password != null && (
+            <TextInput.Icon
+              icon={password === true ? "eye" : "eyeo"}
+              onPress={() => {
+                if (onIconClick) {
+                  onIconClick();
+                }
+              }}
+            />
+          )
+        }
       />
-      <TextInput.Icon>
-        {password ? <Icons password /> : icon && <View>{icon}</View>}
-      </TextInput.Icon>
+
       <HelperText
         type="error"
         style={{ marginTop: -5, marginBottom: 5 }}
