@@ -35,13 +35,7 @@ export default function SearhInput({
         placeholder={placeholder ? placeholder : "Búsqueda"}
         error={errorMessage}
         onSubmitEditing={submitSearch}
-        onChangeText={(e) => {
-          let text = e;
-          if (mayus) {
-            text = text.toUpperCase();
-          }
-          onChangeText(text);
-        }}
+        onChangeText={onChangeText}
         maxLength={max_length}
         autoCapitalize={mayus ? "characters" : "sentences"}
         right={<TextInput.Icon icon="search1" onPress={submitSearch} />}

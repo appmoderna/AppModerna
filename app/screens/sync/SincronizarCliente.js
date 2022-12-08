@@ -1,13 +1,14 @@
 import { FAB } from "@rneui/base";
 import React, { useEffect, useState } from "react";
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
 import Icons from "../../components/Icons";
 import SearchInput from "../../components/SearchInput";
-import { searchClients } from "../../services/ClienteService";
+import { getUnsincronizedClients, searchClients } from "../../services/ClienteService";
 import StyledText from "../../components/StyledText";
-import {ClienteCard} from "../clients/ClienteCard"
 import theme from "../../theme/theme";
 import { Searchbar } from "react-native-paper";
+import ClienteCard from "../clients/ClienteCard";
+import Header from "../../components/Header";
 
 const MINIMUN_ELEMENTS_FOR_SEARCH = 4;
 
@@ -15,8 +16,8 @@ export default function SincronizarClientes({ navigation, route }) {
   const [clientes, setClientes] = useState([]);
   const [search, setSearch] = useState("");
 
-  const buscarClientes = async () => {
-    const response = searchClients(search);
+  const buscarClientes = () => {
+    const response = getUnsincronizedClients();
     setClientes(response);
   };
 
@@ -26,18 +27,14 @@ export default function SincronizarClientes({ navigation, route }) {
 
   return (
     <View style={styles.container}>
+      <Header back={()=>{navigation.goBack()}}/>
       <StyledText heading center bold style={styles.title}>
         CLIENTES
       </StyledText>
-      {(MINIMUN_ELEMENTS_FOR_SEARCH < clientes.length || search !== "") && (
-        <SearchInput
-          value={search}
-          onChangeText={setSearch}
-          label="Busqueda"
-          onSubmit={buscarClientes}
-          style={styles.search}
-        />
-      )}
+      <TouchableOpacity style={styles.selection}>
+        <StyledText >Seleccionar todo</StyledText>
+        <View style={styles.circle}/>
+      </TouchableOpacity>
       {!clientes || clientes.length === 0 ? (
         <View style={styles.container}>
           <StyledText center title bold>
@@ -54,24 +51,6 @@ export default function SincronizarClientes({ navigation, route }) {
           style={styles.list}
         />
       )}
-      <FAB
-        placement="right"
-        color={theme.colors.modernaYellow}
-        onPress={() => navigation.navigate("RegistroCliente")}
-        style={{
-          backgroundColor: "black",
-          marginHorizontal: 150,
-          padding: 8,
-          borderRadius: 50,
-          position: "relative",
-          top: 25,
-          //display: "flex",
-          zIndex: 1,
-          //elevation: 1,
-        }}
-      >
-        +
-      </FAB>
     </View>
   );
 }
@@ -91,5 +70,12 @@ const styles = StyleSheet.create({
   },
   search: {
     marginBottom: 0,
-  },
+  },selection:{
+    paddingHorizontal:30,
+    marginBottom:10,
+    flexDirection:'row',
+    justifyContent:'flex-end',alignItems:'center',
+  },circle:{
+    height:24,width:24,borderWidth:1,borderRadius:50, marginLeft:10,
+  }
 });

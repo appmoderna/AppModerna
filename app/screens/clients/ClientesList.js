@@ -1,6 +1,6 @@
-import { FAB, Icon } from "@rneui/base";
+import { FAB } from "@rneui/base";
 import React, { useEffect, useState } from "react";
-import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, View, StyleSheet } from "react-native";
 import Icons from "../../components/Icons";
 import SearchInput from "../../components/SearchInput";
 import { searchClients } from "../../services/ClienteService";
@@ -16,7 +16,7 @@ export default function ClientesList({ navigation, route }) {
   const [search, setSearch] = useState("");
 
   const buscarClientes = async () => {
-    const response = await searchClients(search);
+    const response = searchClients(search);
     setClientes(response);
   };
 
@@ -46,7 +46,7 @@ export default function ClientesList({ navigation, route }) {
         </View>
       ) : (
         <FlatList
-          keyExtractor={({ item }) => item?.identificacion}
+          keyExtractor={(item) => item.identificacion}
           data={clientes}
           renderItem={({ item }) => {
             return <ClienteCard cliente={item} navigation={navigation} />;
@@ -58,46 +58,9 @@ export default function ClientesList({ navigation, route }) {
         placement="right"
         color={theme.colors.modernaYellow}
         onPress={() => navigation.navigate("RegistroCliente")}
-        // style={{
-        //   backgroundColor: "black",
-        //   marginHorizontal: 150,
-        //   padding: 8,
-        //   borderRadius: 50,
-        //   position: "relative",
-        //   top: 25,
-        //   //display: "flex",
-        //   zIndex: 10,
-        //   elevation: 80,
-        // }}
       >
         +
       </FAB>
-      {/* <TouchableOpacity
-        style={{
-          backgroundColor: 'black',
-          height: 90,
-          width: 90,
-          borderRadius: 50,
-          //bottom: 5,
-          //top:25,
-          zIndex:1,
-          elevation:5,
-          justifyContent: 'center',
-          alignItems: 'center'
-
-        }}
-        //activeOpacity={100}
-      >
-        <Icon
-          name='plus'
-          type="entypo"
-          color='white'
-          style={{ borderRadius: 50, backgroundColor: theme.colors.modernaYellow, padding: 15 }}
-          size={30}
-
-        />
-
-      </TouchableOpacity> */}
     </View>
   );
 }

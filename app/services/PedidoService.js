@@ -13,6 +13,7 @@ const pedidos = [
     idVendedor: "Santiago Mosquera",
     textoFactura: "",
     fecha: "02/02/1992",
+    sincronizado: false,
     detallePedido: [
       {
         producto: productos[0],
@@ -49,6 +50,7 @@ const pedidos = [
     idVendedor: "Santiago Mosquera",
     textoFactura: "Pedido sin stock",
     fecha: "02/02/1991",
+    sincronizado: true,
     detallePedido: [
       {
         producto: productos[0],
@@ -116,6 +118,15 @@ export const consultarPedidos = (criteria) => {
       }
     });
     if (match) {
+      results.push(element);
+    }
+  });
+  return results;
+};
+export const getUnsincronizedPedidos = () => {
+  let results = [];
+  pedidos.forEach((element) => {
+    if (element?.sincronizado === false) {
       results.push(element);
     }
   });

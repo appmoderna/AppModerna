@@ -27,11 +27,15 @@ import { BackHandler, Image, TouchableOpacity, View } from "react-native";
 import StyledText from "./app/components/StyledText";
 import DescargarDiario from "./app/screens/landing/DescargarDiario";
 import { SessionContext, SessionProvider } from "./app/context/SessionProvider";
+import SincronizarClientes from "./app/screens/sync/SincronizarCliente";
+import SincronizarPedidos from "./app/screens/sync/SincronizarPedidos";
 
 const StackClientes = createNativeStackNavigator();
 const StackPedidos = createNativeStackNavigator();
 const StackLogin = createNativeStackNavigator();
 const TabsApp = createBottomTabNavigator();
+const TabSync = createBottomTabNavigator();
+
 const paperTheme = {
   ...DefaultTheme,
   colors: {
@@ -117,6 +121,7 @@ const AppTabNavigation = () => {
     <TabsApp.Navigator
       initialRouteName="ClientesStack4"
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
@@ -172,9 +177,10 @@ const AppTabNavigation = () => {
       />
       <TabsApp.Screen
         name="ClientesStack3"
-        component={PedidoResumen}
+        component={SyncTabNavigation}
         options={{
           headerShown: false,
+          tabBarStyle: { display: "none" },
           tabBarIcon: () => <Icons sync size={30} color={theme.colors.white} />,
         }}
       />
@@ -232,5 +238,52 @@ const PedidosStackNavigation = () => {
         component={PedidoResumen}
       />
     </StackClientes.Navigator>
+  );
+};
+const SyncTabNavigation = () => {
+  return (
+    <TabsApp.Navigator
+      initialRouteName="SynClientes"
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: { backgroundColor: theme.colors.modernaRed },
+      }}
+    >
+      <TabsApp.Screen
+        name="SynClientes"
+        component={SincronizarClientes}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (
+            <Icon
+              name="supervised-user-circle"
+              type="material"
+              size={30}
+              color={theme.colors.white}
+            />
+          ),
+        }}
+      />
+      <TabsApp.Screen
+        name="SynPedidos"
+        component={SincronizarPedidos}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (
+            <Icons product size={30} color={theme.colors.white} />
+          ),
+        }}
+      />
+      <TabsApp.Screen
+        name="SyncInfo"
+        component={SincronizarPedidos}
+        options={{
+          tabBarIcon: () => (
+            <Icons download size={30} color={theme.colors.white} />
+          ),
+        }}
+      />
+    </TabsApp.Navigator>
   );
 };
