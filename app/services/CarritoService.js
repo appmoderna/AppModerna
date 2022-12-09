@@ -6,35 +6,35 @@ const VALOR_IVA = 12;
 const productos = consultarProductos();
 const clientes = getClients();
 
-const carrito = [
-  {
-    producto: productos[0],
-    cantidad: 20,
-    precioUnitario: productos[0].precioVenta,
-    subtotal: productos[0].precioVenta * 20,
-    iva: (productos[0].precioVenta * 20 * VALOR_IVA) / 100,
-  },
-  {
-    idPedido: generateUIDD(),
-    idCliente: clientes[1],
-    idVendedor: "Santiago Mosquera",
-    producto: productos[1],
-    cantidad: 10,
-    precioUnitario: productos[1].precioVenta,
-    subtotal: productos[1].precioVenta * 10,
-    iva: (productos[1].precioVenta * 20 * VALOR_IVA) / 100,
-  },
-  {
-    idPedido: generateUIDD(),
-    idCliente: clientes[1],
-    idVendedor: "Santiago Mosquera",
-    producto: productos[2],
-    cantidad: 1290,
-    precioUnitario: productos[1].precioVenta,
-    subtotal: productos[1].precioVenta * 1290,
-    iva: (productos[1].precioVenta * 1290 * VALOR_IVA) / 100,
-  },
-];
+const carrito = [];
+//   {
+//     producto: productos[0],
+//     cantidad: 20,
+//     precioUnitario: productos[0].precioVenta,
+//     subtotal: productos[0].precioVenta * 20,
+//     iva: (productos[0].precioVenta * 20 * VALOR_IVA) / 100,
+//   },
+//   {
+//     idPedido: generateUIDD(),
+//     idCliente: clientes[1],
+//     idVendedor: "Santiago Mosquera",
+//     producto: productos[1],
+//     cantidad: 10,
+//     precioUnitario: productos[1].precioVenta,
+//     subtotal: productos[1].precioVenta * 10,
+//     iva: (productos[1].precioVenta * 20 * VALOR_IVA) / 100,
+//   },
+//   {
+//     idPedido: generateUIDD(),
+//     idCliente: clientes[1],
+//     idVendedor: "Santiago Mosquera",
+//     producto: productos[2],
+//     cantidad: 1290,
+//     precioUnitario: productos[1].precioVenta,
+//     subtotal: productos[1].precioVenta * 1290,
+//     iva: (productos[1].precioVenta * 1290 * VALOR_IVA) / 100,
+//   },
+// ];
 const detalleCarrito = {
   producto: "",
   cantidad: "",

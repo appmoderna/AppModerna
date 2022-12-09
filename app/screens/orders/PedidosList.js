@@ -1,3 +1,4 @@
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, View } from "react-native";
 import Icons from "../../components/Icons";
@@ -15,6 +16,17 @@ export default function PedidosList({ navigation }) {
     const response = consultarPedidos(search);
     setPedidos(response);
   };
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      obtenerPedidos();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+  useFocusEffect(() => {
+    obtenerPedidos();
+  });
+
   useEffect(() => {
     obtenerPedidos();
   }, [search]);
@@ -49,7 +61,7 @@ export default function PedidosList({ navigation }) {
       </View>
       <FlatList
         style={styles.list}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.idPedido}
         data={pedidos}
         renderItem={({ item }) => {
           return (
@@ -57,6 +69,7 @@ export default function PedidosList({ navigation }) {
               pedido={item}
               navigation={navigation}
               withoutbuttons={true}
+              isChecked={item.sincronizado}
             />
           );
         }}
@@ -99,8 +112,8 @@ const styles = StyleSheet.create({
     height: 30,
     borderBottomWidth: 2,
     borderRightWidth: 2,
-    borderTopWidth:0.5,
-    borderLeftWidth:0.5,
+    borderTopWidth: 0.5,
+    borderLeftWidth: 0.5,
     marginRight: 4,
   },
 });

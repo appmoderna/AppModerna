@@ -39,7 +39,7 @@ const clientes = [
     identificacion: "1314719608",
     direccion: "Av. Amazonas y Naciones Unidad",
     telefono: "091234567",
-    sincronizado: true,
+    sincronizado: false,
   },
 ];
 export default clientes;

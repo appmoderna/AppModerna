@@ -7,7 +7,6 @@ import { searchClients } from "../../services/ClienteService";
 import StyledText from "../../components/StyledText";
 import ClienteCard from "./ClienteCard";
 import theme from "../../theme/theme";
-import { Searchbar } from "react-native-paper";
 
 const MINIMUN_ELEMENTS_FOR_SEARCH = 4;
 
@@ -19,7 +18,13 @@ export default function ClientesList({ navigation, route }) {
     const response = searchClients(search);
     setClientes(response);
   };
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      buscarClientes();
+    });
 
+    return unsubscribe;
+  }, [navigation]);
   useEffect(() => {
     buscarClientes();
   }, [search]);
@@ -49,7 +54,13 @@ export default function ClientesList({ navigation, route }) {
           keyExtractor={(item) => item.identificacion}
           data={clientes}
           renderItem={({ item }) => {
-            return <ClienteCard cliente={item} navigation={navigation} />;
+            return (
+              <ClienteCard
+                cliente={item}
+                navigation={navigation}
+                isChecked={item.sincronizado}
+              />
+            );
           }}
           style={styles.list}
         />

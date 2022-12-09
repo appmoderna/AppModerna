@@ -1,10 +1,20 @@
 import React from "react";
-import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import Icons from "../../components/Icons";
 import StyledText from "../../components/StyledText";
 import theme from "../../theme/theme";
 
-export default function PedidoShortCard({ pedido, navigation }) {
+export default function PedidoShortCard({
+  pedido,
+  isChecked,
+  navigation,
+  onCheckTouch,
+}) {
   return (
     <TouchableWithoutFeedback
       onPress={() => navigation?.navigate("PedidoResumen", { pedido })}
@@ -21,12 +31,20 @@ export default function PedidoShortCard({ pedido, navigation }) {
           <StyledText light>{pedido?.idCliente?.identificacion}</StyledText>
         </View>
         <View style={styles.right}>
-          <Icons
-            check
-            color={
-              pedido?.sincronizado ? theme.colors.active : theme.colors.inactive
-            }
-          />
+          <TouchableOpacity
+            onPress={() => {
+              if (onCheckTouch != null) {
+                onCheckTouch();
+              }
+            }}
+          >
+            <Icons
+              check
+              color={
+                isChecked === true ? theme.colors.active : theme.colors.inactive
+              }
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -37,7 +55,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.modernaRed,
   },
   card: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     paddingVertical: 6,
     marginVertical: 3,
     flexDirection: "row",

@@ -22,6 +22,7 @@ const userIcon = { type: FONT_AWESOME_5, name: "user-alt" };
 const listIcon = { type: MATERIAL_COMUNITY, name: "clipboard-search-outline" };
 const syncIcon = { type: MATERIAL_COMUNITY, name: "cloud-refresh" };
 const productIcon = { type: ANTDESIGN, name: "dropbox" };
+const sendIcon = { type: IONICON, name: "send" };
 const Icons = ({
   address,
   eliminar,
@@ -38,6 +39,7 @@ const Icons = ({
   sync,
   download,
   product,
+  send,
 }) => {
   let icon = deleteIcon;
   if (eliminar) {
@@ -72,6 +74,9 @@ const Icons = ({
   }
   if (product) {
     icon = productIcon;
+  }
+  if (send) {
+    icon = sendIcon;
   }
   if (download) icon = downloadIcon;
   return (

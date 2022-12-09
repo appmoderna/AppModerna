@@ -8,7 +8,7 @@ const registerClient = (client) => {
   clientes.push(client);
   return clientes;
 };
-const searchClients = (criteria) => {
+const searchClients = (criteria, refreshFn) => {
   if (!criteria || criteria === "") {
     return clientes;
   }
@@ -22,6 +22,7 @@ const searchClients = (criteria) => {
       results.push(element);
     }
   });
+  refreshFn(results);
   return results;
 };
 
@@ -34,6 +35,15 @@ const getUnsincronizedClients = () => {
   });
   return results;
 };
+export const sincronizarCliente = (cliente) => {
+  clientes.forEach((element) => {
+    if (element?.identificacion === cliente.identificacion) {
+      element.sincronizado = true;
+    }
+  });
+  return true;
+};
+
 export {
   getClients,
   searchClients,

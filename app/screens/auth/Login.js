@@ -109,7 +109,7 @@ export default function Login({ navigation }) {
           onPress={personaIngreso}
         />
       </View>
-      <StyledButton onPress={login} title="Login with Chrome" />
+      {/* <StyledButton onPress={login} title="Login with Chrome" /> */}
     </View>
   );
 }

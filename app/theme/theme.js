@@ -7,6 +7,7 @@ const theme = {
     modernaRed: "#d22630",
     modernaYellow: "#ecaa20",
     modernaGreen: "#5BC2A7",
+    modernaAqua: "#5BC2A7",
     lightgray: "#9D9D9D",
     active: "#5BC2A7",
     inactive: "#9D9D9D",

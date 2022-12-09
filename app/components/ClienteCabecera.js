@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     borderWidth: 1,
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 10,
     borderColor: "gray",
     width: Dimensions.get("window").width - 120,
-    marginVertical: 20,
+    marginVertical: 15,
   },
 });

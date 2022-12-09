@@ -4,7 +4,12 @@ import Icons from "../../components/Icons";
 import StyledText from "../../components/StyledText";
 import theme from "../../theme/theme";
 
-export default function ClienteCard({ cliente, navigation }) {
+export default function ClienteCard({
+  cliente,
+  isChecked,
+  onCheckTouch,
+  navigation,
+}) {
   const sincronizar = () => {
     Alert.alert("Imagina una función de sincronizar");
   };
@@ -45,14 +50,20 @@ export default function ClienteCard({ cliente, navigation }) {
           </View>
         </View>
         <View style={styles.buttons}>
-          {/* <TouchableOpacity onPress={sincronizar}> */}
-          <Icons
-            check
-            color={
-              cliente.sincronizado ? theme.colors.active : theme.colors.inactive
-            }
-          />
-          {/* </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() => {
+              if (onCheckTouch != null) {
+                onCheckTouch();
+              }
+            }}
+          >
+            <Icons
+              check
+              color={
+                isChecked === true ? theme.colors.active : theme.colors.inactive
+              }
+            />
+          </TouchableOpacity>
         </View>
       </View>
       {/* </TouchableOpacity> */}
