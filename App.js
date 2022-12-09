@@ -29,6 +29,7 @@ import DescargarDiario from "./app/screens/landing/DescargarDiario";
 import { SessionContext, SessionProvider } from "./app/context/SessionProvider";
 import SincronizarClientes from "./app/screens/sync/SincronizarCliente";
 import SincronizarPedidos from "./app/screens/sync/SincronizarPedidos";
+import DescargarArchivos from "./app/screens/sync/DescargarArchivos";
 
 const StackClientes = createNativeStackNavigator();
 const StackPedidos = createNativeStackNavigator();
@@ -127,14 +128,10 @@ const AppTabNavigation = () => {
         tabBarStyle: {
           //position: 'absolute',
           backgroundColor: theme.colors.modernaRed,
-          zIndex: 1,
-          elevation: 1,
-          //left: 5,
-          //right: 5,
+         // zIndex: 1,
+         // elevation: 1,         
           height: 65,
-          //bottom: 21,
-          //borderRadius: 12
-          /*,position:'absolute'*/
+         
         },
 
       }}
@@ -247,7 +244,7 @@ const SyncTabNavigation = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: { backgroundColor: theme.colors.modernaRed },
+        tabBarStyle: { backgroundColor: theme.colors.modernaRed,height: 65, },
       }}
     >
       <TabsApp.Screen
@@ -276,9 +273,10 @@ const SyncTabNavigation = () => {
         }}
       />
       <TabsApp.Screen
-        name="SyncInfo"
-        component={SincronizarPedidos}
+        name="DescargarArchivos"
+        component={DescargarArchivos}
         options={{
+          headerShown: false,
           tabBarIcon: () => (
             <Icons download size={30} color={theme.colors.white} />
           ),
