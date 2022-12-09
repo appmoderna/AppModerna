@@ -14,7 +14,7 @@ export default function ClientesList({ navigation, route }) {
   const [clientes, setClientes] = useState([]);
   const [search, setSearch] = useState("");
 
-  const buscarClientes = async () => {
+  const buscarClientes =  () => {
     const response = searchClients(search);
     setClientes(response);
   };
@@ -65,13 +65,7 @@ export default function ClientesList({ navigation, route }) {
           style={styles.list}
         />
       )}
-      <FAB
-        placement="right"
-        color={theme.colors.modernaYellow}
-        onPress={() => navigation.navigate("RegistroCliente")}
-      >
-        +
-      </FAB>
+      
     </View>
   );
 }

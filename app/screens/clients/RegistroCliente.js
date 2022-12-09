@@ -92,9 +92,9 @@ export default function RegistroCliente({ route, navigation }) {
   };
 
   const register = async () => {
-    // if (validate()) {
-    //   return;
-    // }
+    if (validate()) {
+      return;
+    }
     const cliente = {
       nombre: nombre,
       apellido: nombre,

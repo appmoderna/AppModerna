@@ -22,7 +22,7 @@ const searchClients = (criteria, refreshFn) => {
       results.push(element);
     }
   });
-  refreshFn(results);
+ // refreshFn(results);
   return results;
 };
 
