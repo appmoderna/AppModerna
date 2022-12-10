@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import theme from "../theme/theme";
 import { HelperText, TextInput } from "react-native-paper";
+import { es_EC } from "../commons/texts";
 
 //si no se manda un placeHolder, se pondrá por defecto Buscar
 //si no se manda un label, no se mostrara nada en la parte superior derecha
@@ -27,12 +28,12 @@ export default function SearhInput({
     <View style={style}>
       <TextInput
         keyboardType="default"
-        label={label}
+        label={label ? label : es_EC.LABEL_BUSQUEDA}
         value={value}
         mode="outlined"
         outlineColor={theme.colors.inputcolor}
         activeOutlineColor={theme.colors.active}
-        placeholder={placeholder ? placeholder : "Búsqueda"}
+        placeholder={placeholder ? placeholder : es_EC.LABEL_BUSQUEDA}
         error={errorMessage}
         onSubmitEditing={submitSearch}
         onChangeText={onChangeText}

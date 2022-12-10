@@ -7,6 +7,7 @@ import { searchClients } from "../../services/ClienteService";
 import StyledText from "../../components/StyledText";
 import ClienteCard from "./ClienteCard";
 import theme from "../../theme/theme";
+import { es_EC } from "../../commons/texts";
 
 const MINIMUN_ELEMENTS_FOR_SEARCH = 4;
 
@@ -14,7 +15,7 @@ export default function ClientesList({ navigation, route }) {
   const [clientes, setClientes] = useState([]);
   const [search, setSearch] = useState("");
 
-  const buscarClientes =  () => {
+  const buscarClientes = async () => {
     const response = searchClients(search);
     setClientes(response);
   };
@@ -38,7 +39,7 @@ export default function ClientesList({ navigation, route }) {
         <SearchInput
           value={search}
           onChangeText={setSearch}
-          label="Busqueda"
+          label={es_EC.LABEL_BUSQUEDA}
           onSubmit={buscarClientes}
           style={styles.search}
         />
@@ -65,7 +66,6 @@ export default function ClientesList({ navigation, route }) {
           style={styles.list}
         />
       )}
-      
     </View>
   );
 }

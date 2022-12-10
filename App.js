@@ -30,6 +30,7 @@ import { SessionContext, SessionProvider } from "./app/context/SessionProvider";
 import SincronizarClientes from "./app/screens/sync/SincronizarCliente";
 import SincronizarPedidos from "./app/screens/sync/SincronizarPedidos";
 import DescargarArchivos from "./app/screens/sync/DescargarArchivos";
+import SyncScreen from "./app/screens/sync/SyncScreen";
 
 const StackClientes = createNativeStackNavigator();
 const StackPedidos = createNativeStackNavigator();
@@ -48,39 +49,39 @@ const CustomTabBarButton = () => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-
       onPress={() => navigation.navigate("RegistroCliente")}
       style={{
-        backgroundColor: 'white',
+        backgroundColor: "white",
         height: 70,
         width: 70,
         borderRadius: 50,
         bottom: 35,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: "center",
+        alignItems: "center",
       }}
-    activeOpacity={0.98}
+      activeOpacity={0.98}
     >
       <Icon
-        name='plus'
+        name="plus"
         type="entypo"
-        color='white'
-        style={{ borderRadius: 50, backgroundColor: theme.colors.modernaYellow, padding: 15 }}
+        color="white"
+        style={{
+          borderRadius: 50,
+          backgroundColor: theme.colors.modernaYellow,
+          padding: 15,
+        }}
         size={30}
-
       />
-
     </TouchableOpacity>
   );
-}
-
+};
 
 export default function App() {
   const { sessionUser, sincronizado } = useContext(SessionContext);
   const [appIsReady, setAppIsready] = useState(false);
   const [activate, setActivate] = useState(true);
   useEffect(() => {
-   // console.log("activate: ", activate);
+    // console.log("activate: ", activate);
     const inicia = async () => {
       try {
         await new Promise((resolve) => {
@@ -106,13 +107,11 @@ export default function App() {
     >
       <NavigationContainer>
         {/* AppTabNavigation */}
-        {(sessionUser !== null && sincronizado)
-
-          ? (
-            <AppTabNavigation activate={activate} setActivate={setActivate} />
-          ) : (
-            <LoginStackNavigation />
-          )}
+        {sessionUser !== null && sincronizado ? (
+          <AppTabNavigation activate={activate} setActivate={setActivate} />
+        ) : (
+          <LoginStackNavigation />
+        )}
         <StatusBar />
       </NavigationContainer>
     </PaperProvider>
@@ -121,7 +120,7 @@ export default function App() {
 
 const AppTabNavigation = ({ activate, setActivate }) => {
   const navigation = useNavigation();
- // console.log("Props: ", activate)
+  // console.log("Props: ", activate)
 
   return (
     <TabsApp.Navigator
@@ -134,11 +133,11 @@ const AppTabNavigation = ({ activate, setActivate }) => {
           //position: 'absolute',
           backgroundColor: theme.colors.modernaRed,
           // zIndex: 1,
-          // elevation: 1,         
+          // elevation: 1,
           height: 65,
-
         },
-      }}>
+      }}
+    >
       <TabsApp.Screen
         name="ClientesStack"
         component={ClientesStackNavigation}
@@ -151,23 +150,24 @@ const AppTabNavigation = ({ activate, setActivate }) => {
                   type="ionicon"
                   size={30}
                   color={theme.colors.white}
-                /></TouchableOpacity>
-            )
-          }
+                />
+              </TouchableOpacity>
+            );
+          },
         }}
       />
-      < TabsApp.Screen
+      <TabsApp.Screen
         name="ClientesStack2"
         component={ClientesStackNavigation}
         options={{
-
           tabBarIcon: () => (
-            <TouchableOpacity 
-            style={{padding:18}}
-            onPress={() => {
-              setActivate(true);
-              navigation.navigate("ClientesStack2");
-            }}>
+            <TouchableOpacity
+              style={{ padding: 18 }}
+              onPress={() => {
+                setActivate(true);
+                navigation.navigate("ClientesStack2");
+              }}
+            >
               <Icon
                 name="supervised-user-circle"
                 type="material"
@@ -175,17 +175,20 @@ const AppTabNavigation = ({ activate, setActivate }) => {
                 color={theme.colors.white}
               />
             </TouchableOpacity>
-
           ),
         }}
       />
-      {activate == true ? <TabsApp.Screen
-        name="ButtonPlus"
-        component={ClientesStackNavigation}
-        options={{
-          tabBarButton: () => (<CustomTabBarButton />)
-        }}
-      /> : <></>}
+      {activate == true ? (
+        <TabsApp.Screen
+          name="ButtonPlus"
+          component={ClientesStackNavigation}
+          options={{
+            tabBarButton: () => <CustomTabBarButton />,
+          }}
+        />
+      ) : (
+        <></>
+      )}
       <TabsApp.Screen
         name="ClientesStack3"
         component={SyncTabNavigation}
@@ -193,29 +196,21 @@ const AppTabNavigation = ({ activate, setActivate }) => {
           headerShown: false,
           tabBarStyle: { display: "none" },
           tabBarIcon: () => <Icons sync size={30} color={theme.colors.white} />,
-          tabBarIcon: () =>
-
-            <Icons sync size={30} color={theme.colors.white} />
-          ,
-
         }}
       />
       <TabsApp.Screen
         name="PedidosStackNavigation"
-
         component={PedidosStackNavigation}
-
         options={{
-
           tabBarIcon: () => (
-            <TouchableOpacity 
-            style={{padding:18}}
-            onPress={() => {
-              setActivate(false);
-              //console.log("activate en log: ", activate)
-              navigation.navigate(PedidosStackNavigation);
-            }}>
-
+            <TouchableOpacity
+              style={{ padding: 18 }}
+              onPress={() => {
+                setActivate(false);
+                //console.log("activate en log: ", activate)
+                navigation.navigate(PedidosStackNavigation);
+              }}
+            >
               <Icons list size={30} color={theme.colors.white} />
             </TouchableOpacity>
           ),
@@ -224,14 +219,12 @@ const AppTabNavigation = ({ activate, setActivate }) => {
           //   console.log("Presionando el boton del menú")
           // }}><Text>asdfasdf</Text></TouchableOpacity>,
         }}
-
       />
-    </TabsApp.Navigator >
+    </TabsApp.Navigator>
   );
 };
 
 const LoginStackNavigation = () => {
-  
   return (
     <StackLogin.Navigator
       initialRouteName="Login"
@@ -247,18 +240,20 @@ const ClientesStackNavigation = () => {
   return (
     <StackClientes.Navigator
       initialRouteName="ClientesList"
-      screenOptions={{ headerShown: true, header: () => <Header/> }}
+      screenOptions={{ headerShown: true, header: () => <Header /> }}
     >
       <StackClientes.Screen name="ClientesList" component={ClientesList} />
       <StackClientes.Screen
         name="RegistroCliente"
-        options={
-          {header:()=><Header 
-            back={() => {
-              navigation.goBack();
-          }}
-          />}
-        }
+        options={{
+          header: () => (
+            <Header
+              back={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+        }}
         component={RegistroCliente}
       />
       <StackClientes.Screen name="AgregarPedido" component={PedidoCliente} />
@@ -271,7 +266,6 @@ const ClientesStackNavigation = () => {
   );
 };
 const PedidosStackNavigation = () => {
-
   return (
     <StackClientes.Navigator
       initialRouteName="PedidosList"
@@ -287,14 +281,13 @@ const PedidosStackNavigation = () => {
   );
 };
 const SyncTabNavigation = () => {
-
   return (
     <TabsApp.Navigator
       initialRouteName="SynClientes"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: { backgroundColor: theme.colors.modernaRed, height: 65, },
+        tabBarStyle: { backgroundColor: theme.colors.modernaRed, height: 65 },
       }}
     >
       <TabsApp.Screen

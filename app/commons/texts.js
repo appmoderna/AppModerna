@@ -30,4 +30,6 @@ export const es_EC = {
 
   ////NAME AND LAST NAME
   AT_LEAT_1_NAME_LASTNAME: "Debe ingresar al menos un nombre y un apellido",
+  ///LABELS
+  LABEL_BUSQUEDA: "Búsqueda",
 };

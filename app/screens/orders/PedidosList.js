@@ -1,6 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, View } from "react-native";
+import { es_EC } from "../../commons/texts";
 import Icons from "../../components/Icons";
 import SearhInput from "../../components/SearchInput";
 import StyledText from "../../components/StyledText";
@@ -42,7 +43,7 @@ export default function PedidosList({ navigation }) {
         onChangeText={setSearch}
         style={styles.search}
         placeholder="Buscar pedido"
-        label="Buscar"
+        label={es_EC.LABEL_BUSQUEDA}
       />
       <View style={styles.information}>
         <View style={styles.infodetail}>

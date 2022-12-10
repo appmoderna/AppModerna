@@ -98,7 +98,7 @@ export default function RegistroCliente({ route, navigation }) {
     const cliente = {
       nombre: nombre,
       apellido: nombre,
-      dni: cedula,
+      identificacion: cedula,
       direccion: direccion,
       sincronizado: false,
     };

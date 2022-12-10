@@ -5,15 +5,11 @@ import { Keyboard, View, StyleSheet } from "react-native";
 import theme from "../theme/theme";
 import Constants from "expo-constants";
 import Icons from "./Icons";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Header({
-  back,
-  navigation,
-  scale = 1,
-  hide = true,
-  style,
-}) {
+export default function Header({ back, scale = 1, hide = true, style }) {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const navigation = useNavigation();
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -38,7 +34,7 @@ export default function Header({
     <View style={[styles.statusbar]}>
       {back && (
         <View style={styles.back}>
-          <TouchableOpacity onPress={back}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <Icons
               color={theme.colors.modernaYellow}
               style={styles.button}
